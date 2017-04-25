@@ -2,19 +2,27 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-import { Configuration } from '../app.constants';
+
+//import { Configuration } from '../app.constants';
 
 @Injectable()
 export class RestService {
     public modelName: string;
+    public serverHTTPApi = "http://127.0.0.1/api/";
+
     private headers: Headers;
 
     // cache data
     public lastGetAll: Array<any>;
     public lastGet: any;
 
-    constructor(private http: Http, private config: Configuration) {
+    constructor(
+        private http: Http,
+        //private config: Configuration
+    )
+    {
         this.modelName = 'to-configure';
+        //this.serverHTTPApi = this.config.serverHTTPApi;
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
@@ -42,7 +50,7 @@ export class RestService {
     }
 
     private getActionUrl() {
-      return this.config.serverWithApiUrl + this.modelName + '/';
+      return this.serverHTTPApi + this.modelName + '/';
     }
 
 
@@ -72,7 +80,7 @@ export class RestService {
             .catch(this.handleError);
     }
 
-    public get(id: number): Observable<any> {
+    public get(id: any): Observable<any> {
         return this.http.get(this.getActionUrl() + id)
             .map((response: Response) => {
               let data = response.json();
@@ -80,6 +88,18 @@ export class RestService {
               return data;
             })
             .catch(this.handleError);
+    }
+
+    public postAsync (postData: any){
+        var headers = new Headers();
+
+        headers.append('Content-Type', 'application/X-www-form-urlencoded');
+        return new Promise((resolve) => {
+            this.http.post(this.getActionUrl(), postData, {headers: headers}).subscribe((data) => {
+                    resolve(data.json());
+                }
+            );
+        });
     }
 
     public add(item: any): Observable<number> {

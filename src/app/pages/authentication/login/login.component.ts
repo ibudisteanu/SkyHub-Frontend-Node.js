@@ -1,20 +1,29 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { User } from '../../../models/user';
-import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 
+import { User } from '../../../models/user';
+import { UserService } from '../../../services/user.service';
+
+import { RestService } from '../../../services/rest/http/rest.service';
+import { AuthService } from '../../../services/auth/auth.service';
+
 @Component({
+  providers: [RestService, AuthService],
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent implements OnInit {
-  private password: string;
-  private email: string;
+export class LoginComponent implements OnInit
+{
+  private sPassword: string;
+  private sEmailUserName: string;
 
   constructor(
     private userServ: UserService,
+    private restServ: RestService,
+    private authServ: AuthService,
     private router: Router
-  ) {
+  )
+  {
   }
 
   public ngOnInit() {
@@ -23,31 +32,44 @@ export class LoginComponent implements OnInit {
 
   private login() {
 
-    // test les champs en js
+    this.authServ.loginHTTP(this.sEmailUserName, this.sPassword).then((res) => {
+      if (res) {
+        this.loginSuccessfully(res);
+      }
+      else
+        this.loginUnsuccessfully(res);
+    });
 
-    // envoyer les champs a php
+  }
 
-    // si retour positif, log le user
-    if ( 1 === 1 ) {
+  protected loginSuccessfully(res){
+    let user1 = new User( {
+      avatarUrl: 'public/assets/img/user2-160x160.jpg',
+      email: 'weber.antoine.pro@gmail.com',
+      firstname: 'WEBER',
+      lastname: 'Antoine'
+    } );
 
-      let user1 = new User( {
-          avatarUrl: 'public/assets/img/user2-160x160.jpg',
-          email: 'weber.antoine.pro@gmail.com',
-          firstname: 'WEBER',
-          lastname: 'Antoine'
-      } );
+    user1.connected = true;
 
-      user1.connected = true;
+    this.userServ.setCurrentUser( user1 );
 
-      this.userServ.setCurrentUser( user1 );
+    this.router.navigate( ['home'] );
+  }
 
-      this.router.navigate( ['home'] );
-    } else {
-      // je recupere l'erreur du php
-      // et on le place dans un label, ou un toaster
-    }
+  protected loginUnsuccessfully(res){
+    console.log("ERROR LOGIN");
+    console.log("DID U FORGOT YOUR PASSWORD?");
+    console.log(res);
+  }
 
+  private logOut(){
+    this.userServ.logout();
+  }
 
+  private clearFields(){
+    this.sEmailUserName = '';
+    this.sPassword = '';
   }
 
 }

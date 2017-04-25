@@ -60,9 +60,11 @@ import { MessagesService } from './services/messages.service';
 import { CanActivateGuard } from './services/guard.service';
 import { NotificationService } from './services/notification.service';
 import { BreadcrumbService } from './services/breadcrumb.service';
-import { SocketIoService } from "./services/socket/socketio.service";
 import { AdminLTETranslateService } from './services/translate.service';
 import { LoggerService } from './services/logger.service';
+import { SocketIoService } from "./services/rest/socket/socketio.service";
+import { RestService } from "./services/rest/http/rest.service";
+import { AuthService } from "./services/auth/auth.service";
 
 let services = [
     UserService,
@@ -73,6 +75,8 @@ let services = [
     AdminLTETranslateService,
     LoggerService,
     SocketIoService,
+    RestService,
+    AuthService,
 ];
 
 // les pages
@@ -97,7 +101,7 @@ import { routing } from './app.routes';
 
 
 @NgModule( {
-    bootstrap: [AppComponent],
+    bootstrap: [AppComponent ],
     declarations: [
         ...widgets,
         ...pages

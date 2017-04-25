@@ -18,6 +18,7 @@ src/environments/environment.prod.ts
 *.launch
 .settings/
 .vscode
+.idea
 
 # misc
 /.sass-cache

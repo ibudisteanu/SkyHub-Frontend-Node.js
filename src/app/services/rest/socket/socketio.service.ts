@@ -3,15 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 
+//import { Configuration } from '../../app.constants';
+
 
 @Injectable()
 export class SocketIoService{
 
-    protected sServerAddress = 'http://localhost:3000';
     protected socket = null;
 
-    constructor() {
-
+    constructor(
+        //private config: Configuration
+    )
+    {
         console.log('Client Socket Constructor');
 
         this.createClientSocket();
@@ -19,7 +22,8 @@ export class SocketIoService{
 
     private createClientSocket()
     {
-        this.socket = io(this.sServerAddress);
+        //this.socket = io(this.config.Socket_Server_API);
+        this.socket = io('127.0.0.1:3000/api');
 
         let listener = Observable.fromEvent(this.socket, 'message');
 
