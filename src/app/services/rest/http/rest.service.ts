@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RestService {
-    public modelName: string;
     public serverHTTPApi = "http://127.0.0.1/api/";
 
     private headers: Headers;
@@ -21,8 +20,9 @@ export class RestService {
         //private config: Configuration
     )
     {
-        this.modelName = 'to-configure';
+
         //this.serverHTTPApi = this.config.serverHTTPApi;
+        this.serverHTTPApi = this.addTrailingSlash(this.serverHTTPApi);
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
@@ -30,8 +30,8 @@ export class RestService {
     }
 
     // HELPERS
-    public getAllFromLS(maxtime = 0): Array<any> {
-      let json = localStorage.getItem( 'rest_all_' + this.modelName );
+    public getAllFromLS(sApiRequest, maxtime = 0): Array<any> {
+      let json = localStorage.getItem( 'rest_all_' + sApiRequest );
       if ( json ) {
         let obj = JSON.parse(json);
         if ( obj && (obj.date < (Date.now() - maxtime) ) ) {
@@ -49,17 +49,14 @@ export class RestService {
       }
     }
 
-    private getActionUrl() {
-      return this.serverHTTPApi + this.modelName + '/';
-    }
-
 
     // REST functions
-    public getAll(): Observable<any[]> {
-        return this.http.get(this.getActionUrl())
+    public getAll(sApiRequest): Observable<any[]> {
+
+        return this.http.get(this.serverHTTPApi)
             .map((response: Response) => {
               // getting an array having the same name as the model
-              let data = response.json()[this.modelName];
+              let data = response.json()[sApiRequest];
               // transforming the array from indexed to associative
               let tab = data.records.map((elem) => {
                 let unit = {};
@@ -74,14 +71,15 @@ export class RestService {
                 data: tab,
                 date: Date.now()
               };
-              localStorage.setItem( 'rest_all_' + this.modelName, JSON.stringify(obj) );
+              localStorage.setItem( 'rest_all_' + sApiRequest, JSON.stringify(obj) );
               return tab;
             })
             .catch(this.handleError);
     }
 
-    public get(id: any): Observable<any> {
-        return this.http.get(this.getActionUrl() + id)
+    public get(sApiRequest, id: any): Observable<any> {
+        sApiRequest = this.addTrailingSlash(this.serverHTTPApi+sApiRequest);
+        return this.http.get(sApiRequest + id)
             .map((response: Response) => {
               let data = response.json();
               this.lastGet = data;
@@ -90,42 +88,48 @@ export class RestService {
             .catch(this.handleError);
     }
 
-    public postAsync (postData: any){
+    public postAsync (sApiRequest, postData: any){
+        sApiRequest = this.addTrailingSlash(this.serverHTTPApi+sApiRequest);
         var headers = new Headers();
 
         headers.append('Content-Type', 'application/X-www-form-urlencoded');
         return new Promise((resolve) => {
-            this.http.post(this.getActionUrl(), postData, {headers: headers}).subscribe((data) => {
+            this.http.post(sApiRequest, postData, {headers: headers}).subscribe((data) => {
                     resolve(data.json());
                 }
             );
         });
     }
 
-    public add(item: any): Observable<number> {
+    public add(sApiRequest, item: any): Observable<number> {
+        sApiRequest = this.addTrailingSlash(this.serverHTTPApi+sApiRequest);
         let toAdd = JSON.stringify(item);
 
-        return this.http.post(this.getActionUrl(), toAdd, { headers: this.headers })
+        return this.http.post(sApiRequest, toAdd, { headers: this.headers })
             .map((response: Response) => response.json())
             .catch(this.handleError);
     }
 
-    public addAll(tab: Array<any>): Observable<Array<number>> {
+    public addAll(sApiRequest, tab: Array<any>): Observable<Array<number>> {
+      sApiRequest = this.addTrailingSlash(this.serverHTTPApi+sApiRequest);
       let toAdd = JSON.stringify(tab);
 
-      return this.http.post(this.getActionUrl(), toAdd, { headers: this.headers })
+      return this.http.post(sApiRequest, toAdd, { headers: this.headers })
           .map((response: Response) => response.json())
           .catch(this.handleError);
     }
 
-    public update(id: number, itemToUpdate: any): Observable<number> {
-        return this.http.put(this.getActionUrl() + id, JSON.stringify(itemToUpdate), { headers: this.headers })
+    public update(sApiRequest, id: number, itemToUpdate: any): Observable<number> {
+        sApiRequest = this.addTrailingSlash(this.serverHTTPApi+sApiRequest);
+
+        return this.http.put(sApiRequest+id, JSON.stringify(itemToUpdate), { headers: this.headers })
             .map((response: Response) => response.json())
             .catch(this.handleError);
     }
 
-    public delete(id: number): Observable<Response> {
-        return this.http.delete(this.getActionUrl() + id)
+    public delete(sApiRequest, id: number): Observable<Response> {
+        sApiRequest = this.addTrailingSlash(this.serverHTTPApi+sApiRequest);
+        return this.http.delete(sApiRequest + id)
             .catch(this.handleError);
     }
 
@@ -133,4 +137,13 @@ export class RestService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
+
+    public addTrailingSlash(url){
+        var lastChar = url.substr(-1); // Selects the last character
+        if (lastChar != '/') {         // If the last character is not a slash
+            url = url + '/';            // Append a slash to it.
+        }
+        return url;
+    }
+
 }

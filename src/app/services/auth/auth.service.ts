@@ -20,8 +20,6 @@ export class AuthService {
     public loginHTTP(sEmailUserName, sUserPassword) {
         this.isLoggedin = false;
 
-        this.restService.modelName = "auth";
-
 /*        this.restService.postAsync(sEmailUserName+"/"+sUserPassword).then((resData) =>{
              if(resData.json().success) {
                  window.localStorage.setItem('auth_key', resData.json().token);
@@ -31,7 +29,7 @@ export class AuthService {
 
         return new Promise( (resolve)=>{
 
-            this.restService.postAsync(sEmailUserName+"/"+sUserPassword).then((resData : any) =>{
+            this.restService.postAsync("auth", {emailUserName:sEmailUserName,userPassword:sUserPassword} ).then((resData : any) =>{
 
                 if(resData.success) {
                     window.localStorage.setItem('auth_key', resData.token);
