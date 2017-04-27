@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
 
-import { RestService } from '../../../services/rest/http/rest.service';
+//import { RestService } from '../../../services/rest/http/rest.service';
 import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
-  providers: [RestService, AuthService],
+  //providers: [RestService, AuthService],
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit
 
   constructor(
     private userServ: UserService,
-    private restServ: RestService,
+    //private restServ: RestService,
     private authServ: AuthService,
     private router: Router
   )
@@ -31,6 +31,10 @@ export class LoginComponent implements OnInit
   }
 
   private login() {
+
+  }
+
+  private loginHTTP() {
 
     this.authServ.loginHTTP(this.sEmailUserName, this.sPassword).then((res) => {
       if (res) {

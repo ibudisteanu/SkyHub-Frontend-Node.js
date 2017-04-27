@@ -17,6 +17,11 @@ export class AuthService {
 
     }
 
+    public login(sEmailUserName, sUserPassword)
+    {
+        this.socketService.sendRequest("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword});
+    }
+
     public loginHTTP(sEmailUserName, sUserPassword) {
         this.isLoggedin = false;
 
@@ -29,7 +34,7 @@ export class AuthService {
 
         return new Promise( (resolve)=>{
 
-            this.restService.postAsync("auth", {emailUserName:sEmailUserName,userPassword:sUserPassword} ).then((resData : any) =>{
+            this.restService.postAsync("auth/login", {emailUserName:sEmailUserName,userPassword:sUserPassword} ).then((resData : any) =>{
 
                 if(resData.success) {
                     window.localStorage.setItem('auth_key', resData.token);

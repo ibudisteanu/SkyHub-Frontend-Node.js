@@ -7,7 +7,8 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RestService {
-    public serverHTTPApi = "http://127.0.0.1/api/";
+    public serverHTTP = "http://127.0.0.1:3000/";
+    public serverHTTPApi = this.serverHTTP+"api/";
 
     private headers: Headers;
 
@@ -25,8 +26,15 @@ export class RestService {
         this.serverHTTPApi = this.addTrailingSlash(this.serverHTTPApi);
 
         this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json');
-        this.headers.append('Accept', 'application/json');
+        /*this.headers.append('Content-Type', 'application/json');
+        this.headers.append('Accept', 'application/json');*/
+
+        this.headers.append('Content-Type', 'application/X-www-form-urlencoded');
+        this.headers.append('Access-Control-Allow-Origin', this.serverHTTP);
+        this.headers.append('Access-Control-Allow-Methods', "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+        this.headers.append('Access-Control-Allow-Headers', "X-Requested-With,content-type");
+        //this.headers.append('Access-Control-Allow-Credentials', 'true');
+
     }
 
     // HELPERS
@@ -90,11 +98,10 @@ export class RestService {
 
     public postAsync (sApiRequest, postData: any){
         sApiRequest = this.addTrailingSlash(this.serverHTTPApi+sApiRequest);
-        var headers = new Headers();
 
-        headers.append('Content-Type', 'application/X-www-form-urlencoded');
+        console.log(sApiRequest);
         return new Promise((resolve) => {
-            this.http.post(sApiRequest, postData, {headers: headers}).subscribe((data) => {
+            this.http.post(sApiRequest, postData, {headers: this.headers}).subscribe((data) => {
                     resolve(data.json());
                 }
             );
