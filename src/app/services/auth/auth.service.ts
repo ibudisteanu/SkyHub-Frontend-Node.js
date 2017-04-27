@@ -38,44 +38,24 @@ export class AuthService {
 
             });
 
-            /*
-            //Sending with Socket.on
-            console.log('Sending Auth Login Request');
-            this.socketService.sendRequest("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword});
-
-            this.socketService.socket.on("api/auth/login",function(resData){
-                console.log('Answer from Server Auth Login');
-                console.log(resData);
-                console.log(this);
-
-                if(resData.success) {
-                    window.localStorage.setItem('auth_key', resData.token);
-                    this.isLoggedin = true;
-                }
-
-                resolve(resData);
-            });
-            */
-
-
-            /*
-            //Sending with Observable
-            this.socketService.sendRequestObservable("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword}).subscribe( resData =>{
-
-                console.log('Answer from Server Auth Login');
-                console.log(resData);
-                console.log(this);
-
-                if(resData.success) {
-                    window.localStorage.setItem('auth_key', resData.token);
-                    this.isLoggedin = true;
-                }
-
-                resolve(resData);
-            });
-            */
-
         });
+
+        /*
+         //Sending with Observable
+         this.socketService.sendRequestObservable("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword}).subscribe( resData =>{
+
+         console.log('Answer from Server Auth Login');
+         console.log(resData);
+         console.log(this);
+
+         if(resData.success) {
+         window.localStorage.setItem('auth_key', resData.token);
+         this.isLoggedin = true;
+         }
+
+         resolve(resData);
+         });
+        */
 
     }
 

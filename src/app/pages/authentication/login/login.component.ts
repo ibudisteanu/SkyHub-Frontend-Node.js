@@ -30,8 +30,7 @@ export class LoginComponent implements OnInit
     window.dispatchEvent( new Event( 'resize' ) );
   }
 
-  private checkLogin() {
-
+  protected loginForm() {
 
     this.authServ.loginAsync(this.sEmailUserName, this.sPassword).then((res) => {
       if (res)
@@ -43,7 +42,7 @@ export class LoginComponent implements OnInit
 
   }
 
-  private loginHTTP() {
+  private loginFormHTTP() {
 
     this.authServ.loginHTTP(this.sEmailUserName, this.sPassword).then((res) => {
       if (res) {
