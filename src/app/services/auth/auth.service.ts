@@ -56,18 +56,14 @@ export class AuthService {
          resolve(resData);
          });
         */
+    }
+
+    public registerAsync(sUsername, sEmailAddress, sPassword, sFirstName, sLastName, sCountry){
 
     }
 
     public loginHTTP(sEmailUserName, sUserPassword) {
         this.logout();
-
-/*        this.restService.postAsync(sEmailUserName+"/"+sUserPassword).then((resData) =>{
-             if(resData.json().success) {
-                 window.localStorage.setItem('auth_key', resData.json().token);
-                 this.isLoggedin = true;
-             }
-         });*/
 
         return new Promise( (resolve)=>{
 

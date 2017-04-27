@@ -41,6 +41,7 @@ import { NotificationBoxComponent } from './widgets/notification-box';
 import { TasksBoxComponent } from './widgets/tasks-box';
 import { UserBoxComponent } from './widgets/user-box';
 import { BreadcrumbComponent } from './widgets/breadcrumb';
+import { SocketConnectionStatusBarComponent } from './widgets/socket-connection-status-bar';
 
 let widgets = [
     AppComponent,
@@ -52,7 +53,8 @@ let widgets = [
     MessagesBoxComponent,
     NotificationBoxComponent,
     TasksBoxComponent,
-    UserBoxComponent
+    UserBoxComponent,
+    SocketConnectionStatusBarComponent
 ];
 
 import { UserService } from './services/user.service';

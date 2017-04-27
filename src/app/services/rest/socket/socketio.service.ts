@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
+import { ReplaySubject } from 'rxjs';
 
 //import { Configuration } from '../../app.constants';
 
@@ -15,10 +16,13 @@ export class SocketIoService{
 
     public sServerSocketVersion = "";
 
+    public currentSocketServiceStatusObservable: ReplaySubject<any>;
+
     constructor(
         //private config: Configuration
     )
     {
+        this.currentSocketServiceStatusObservable = new ReplaySubject(1);
         console.log('Client Socket Constructor');
         //this.sServerSocketAddress = this.config.Socket_Server
         //this.sServerSocketApi = this.config.Socket_Server_API
@@ -30,11 +34,17 @@ export class SocketIoService{
     {
         this.socket = io(this.sServerSocketAddress);
 
-        this.socket.on('connect',function() {
+        this.setSocketReadObservable("connect").subscribe( response =>{
 
             console.log('Client has connected to the server!');
 
+            this.currentSocketServiceStatusObservable.next({
+                display: true,
+            })
+
         });
+
+
 
 
         this.socket.on('api/news', function(res){
@@ -63,8 +73,12 @@ export class SocketIoService{
         });
 
         // Add a disconnect listener
-        this.socket.on('disconnect',function() {
+        this.setSocketReadObservable("disconnect").subscribe( response =>{
             console.log('The client has disconnected!');
+
+            this.currentSocketServiceStatusObservable.next({
+                display: false,
+            })
         });
 
     }
@@ -113,7 +127,8 @@ export class SocketIoService{
 
     public setSocketReadObservable(sRequestName){
 
-        sRequestName = this.sServerSocketApi+sRequestName;
+        if ((sRequestName !== "connect")&&(sRequestName !== "disconnect"))
+            sRequestName = this.sServerSocketApi+sRequestName;
 
         let observable = new Observable<any>(observer => {
             this.socket.on(sRequestName, (data) =>{
