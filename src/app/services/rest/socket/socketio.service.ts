@@ -10,7 +10,7 @@ import * as io from 'socket.io-client';
 export class SocketIoService{
 
     public socket = null;
-    protected sServerSocketAddress = "127.0.0.1:3000";
+    protected sServerSocketAddress = "myskyhub.ddns.net:3000";
     protected sServerSocketApi = "api/";
 
     public sServerSocketVersion = "";

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RestService {
-    public serverHTTP = "http://127.0.0.1:3000/";
+    public serverHTTP = "http://myskyhub.ddns.net:3000/";
     public serverHTTPApi = this.serverHTTP+"api/";
 
     private headers: Headers;

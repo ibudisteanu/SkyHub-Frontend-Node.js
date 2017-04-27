@@ -3,7 +3,31 @@
 **LINK Tutorial**
 https://github.com/TwanoO67/ng2-admin-lte
 
-//TUTORIAL SOCKET IO https://www.youtube.com/watch?v=kyPiJEVQ6cU
+**TUTORIAL SOCKET IO** 
+https://www.youtube.com/watch?v=kyPiJEVQ6cU
+
+#RUNNING and STARTING the Angular 
+
+```
+cd project_directory
+
+```
+
+```
+ng serve   
+ 
+```
+OR  - especially to run for a nameserver or IP  
+``` 
+ng serve --host 0.0.0.0
+```
+
+To access the angular page:
+
+```
+http://127.0.0.1:4200
+http://myskyhub.ddns.net:4200
+```
 
 # ng2-admin-lte
 
