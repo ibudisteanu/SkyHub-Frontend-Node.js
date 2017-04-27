@@ -30,7 +30,16 @@ export class LoginComponent implements OnInit
     window.dispatchEvent( new Event( 'resize' ) );
   }
 
-  private login() {
+  private checkLogin() {
+
+
+    this.authServ.loginAsync(this.sEmailUserName, this.sPassword).then((res) => {
+      if (res)
+        this.loginSuccessfully(res);
+      else
+        this.loginUnsuccessfully(res);
+    });
+
 
   }
 

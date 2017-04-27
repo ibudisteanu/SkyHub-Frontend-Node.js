@@ -9,44 +9,56 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class SocketIoService{
 
-    protected socket = null;
+    public socket = null;
+    protected sServerSocketAddress = "127.0.0.1:3000";
+    protected sServerSocketApi = "api/";
+
+    public sServerSocketVersion = "";
 
     constructor(
         //private config: Configuration
     )
     {
         console.log('Client Socket Constructor');
+        //this.sServerSocketAddress = this.config.Socket_Server
+        //this.sServerSocketApi = this.config.Socket_Server_API
 
         this.createClientSocket();
     }
 
     private createClientSocket()
     {
-        //this.socket = io(this.config.Socket_Server_API);
-        this.socket = io('127.0.0.1:3000');
+        this.socket = io(this.sServerSocketAddress);
 
         this.socket.on('connect',function() {
+
             console.log('Client has connected to the server!');
+
         });
 
 
-        this.socket.on('news', function(res){
+        this.socket.on('api/news', function(res){
             console.log('news');
             console.log(res);
         });
 
-        this.setSocketReadObservable("connectionReady", function (response){
-            console.log("Connection Ready: ");
-            console.log(response);
+        // THE SAME CODE written but using OBSERVABLE
+        this.setSocketReadObservable("connectionReady").subscribe( response =>{
 
-            this.sendRequestSolve("api/version",'',function (res){
-                console.log("API VERSION");
-            });
-        });
+                console.log("Connection Ready: "+response);
+
+                this.sendRequestObservable("version",'').subscribe (response => {
+
+                    this.sServerSocketVersion = response.version;
+
+                    console.log("API VERSION: "+response.version);
+                });
+            }
+        );
 
 
         // Add a connect listener
-        this.socket.on('message',function(data) {
+        this.socket.on('api/message',function(data) {
             console.log('Received a message from the server!',data);
         });
 
@@ -57,33 +69,67 @@ export class SocketIoService{
 
     }
 
+    public sendRequest(sRequestName, sRequestData){
+
+        //console.log('sending'+sRequestName); console.log(sRequestData);
+
+        if ((sRequestName !== '') || (sRequestData !== ''))
+            return this.socket.emit(this.sServerSocketApi+sRequestName, sRequestData);
+    }
+
+    /*
+        Sending the Request and Obtain the Promise to Wait Async
+     */
+    public sendRequestGetDataPromise(sRequestName, sRequestData){
+        return new Promise( (resolve)=> {
+
+            this.sendRequest(sRequestName, sRequestData);
+
+            this.socket.on(this.sServerSocketApi+sRequestName, function(resData)  {
+
+                /*console.log('SOCKET RECEIVED: ');
+                console.log(resData);*/
+
+                resolve(resData);
+
+            }) ;
+
+        });
+    }
+
     public sendMessage(msg) {
         return this.sendRequest("message",msg);
     }
 
-    public sendRequest(sRequestName, sRequestData){
-        return this.socket.emit(sRequestName, sRequestData);
-    }
-
-    public sendRequestSolve(sRequestName, sRequestData, callBackFunction){
+    /*
+        Sending Request and Obtain the Observable Object
+     */
+    public sendRequestObservable(sRequestName, sRequestData){
 
         var result = this.sendRequest(sRequestName, sRequestData);
 
-        if (typeof callBackFunction !== 'undefined')
-            this.setSocketReadObservable(sRequestName, callBackFunction);
-
-        return result;
+        return this.setSocketReadObservable(sRequestName);
     }
 
-    public setSocketReadObservable(sRequestName, callBackFunction){
-        let listenerSocket = Observable.fromEvent(this.socket, sRequestName);
+    public setSocketReadObservable(sRequestName){
+
+        sRequestName = this.sServerSocketApi+sRequestName;
+
+        let observable = new Observable<any>(observer => {
+            this.socket.on(sRequestName, (data) =>{
+               observer.next(data);
+            });
+        });
+        return observable;
+
+        /*let listenerSocket = Observable.fromEvent(this.socket, sRequestName);
 
         listenerSocket.subscribe((payload) => {
             console.log("Socket received on: "+sRequestName);
             console.log(payload);
 
-            callBackFunction(payload);
-        });
+            callBackFunction(this, payload);
+        });*/
     }
 
 }

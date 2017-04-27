@@ -17,13 +17,70 @@ export class AuthService {
 
     }
 
-    public login(sEmailUserName, sUserPassword)
+    public loginAsync(sEmailUserName, sUserPassword)
     {
-        this.socketService.sendRequest("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword});
+        this.logout();
+
+        return new Promise( (resolve)=> {
+
+            //Using Promise
+            this.socketService.sendRequestGetDataPromise("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword}).then( (resData : any) => {
+
+                console.log('Answer from Server Auth Login');
+                console.log(resData);
+
+                if(resData.success) {
+                    window.localStorage.setItem('auth_key', resData.token);
+                    this.isLoggedin = true;
+                }
+
+                resolve(resData);
+
+            });
+
+            /*
+            //Sending with Socket.on
+            console.log('Sending Auth Login Request');
+            this.socketService.sendRequest("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword});
+
+            this.socketService.socket.on("api/auth/login",function(resData){
+                console.log('Answer from Server Auth Login');
+                console.log(resData);
+                console.log(this);
+
+                if(resData.success) {
+                    window.localStorage.setItem('auth_key', resData.token);
+                    this.isLoggedin = true;
+                }
+
+                resolve(resData);
+            });
+            */
+
+
+            /*
+            //Sending with Observable
+            this.socketService.sendRequestObservable("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword}).subscribe( resData =>{
+
+                console.log('Answer from Server Auth Login');
+                console.log(resData);
+                console.log(this);
+
+                if(resData.success) {
+                    window.localStorage.setItem('auth_key', resData.token);
+                    this.isLoggedin = true;
+                }
+
+                resolve(resData);
+            });
+            */
+
+        });
+
     }
 
     public loginHTTP(sEmailUserName, sUserPassword) {
-        this.isLoggedin = false;
+        this.logout();
 
 /*        this.restService.postAsync(sEmailUserName+"/"+sUserPassword).then((resData) =>{
              if(resData.json().success) {
@@ -54,6 +111,7 @@ export class AuthService {
     }
 
     public logout(){
+        this.isLoggedin = false;
         window.localStorage.removeItem('auth_key');
     }
 }

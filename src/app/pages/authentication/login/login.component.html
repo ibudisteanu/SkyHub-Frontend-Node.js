@@ -7,15 +7,15 @@
     <div class="login-box-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form (submit)="login()" >
+      <form (submit)="checkLogin()" >
 
         <div class="form-group has-feedback">
-          <input type="email" class="form-control" placeholder="Email or Username" required minlength="6" name="emailInput" [(ngModel)]="sEmailUserName" #emailInput="ngModel">
+          <input type="text" class="form-control" placeholder="Email or Username" name="emailInput" [(ngModel)]="sEmailUserName" #emailInput="ngModel"  required minlength="3" maxlength="50">
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
 
         <div class="form-group has-feedback">
-          <input type="password" class="form-control" placeholder="Password" required minlength="6" name="passwordInput" [(ngModel)]="sPassword" #passwordInput="ngModel">
+          <input type="password" class="form-control" placeholder="Password" name="passwordInput" [(ngModel)]="sPassword" #passwordInput="ngModel" required minlength="3" >
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
@@ -28,7 +28,7 @@
           </div>
           <!-- /.col -->
           <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat" (click)="login()" >Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat" (click)="checkLogin()" >Sign In</button>
           </div>
           <!-- /.col -->
         </div>
@@ -44,8 +44,8 @@
 
       </div>
 
-      <a href="#">I forgot my password</a><br>
-      <a routerLink="/register" class="text-center">Register a new membership</a>
+      <a href="#">I forgot my password</a> <br/> <br/> 
+      <a routerLink="/register" class="text-center"> <b>Register</b> a new membership</a>
 
     </div>
     <!-- /.login-box-body -->
