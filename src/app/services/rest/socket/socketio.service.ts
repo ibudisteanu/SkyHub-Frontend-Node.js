@@ -38,9 +38,10 @@ export class SocketIoService{
 
             console.log('Client has connected to the server!');
 
-            this.currentSocketServiceStatusObservable.next({
-                display: true,
-            })
+            this.changeSocketStatus({
+                display: false,
+                description: "The connection is established"
+            });
 
         });
 
@@ -76,9 +77,11 @@ export class SocketIoService{
         this.setSocketReadObservable("disconnect").subscribe( response =>{
             console.log('The client has disconnected!');
 
-            this.currentSocketServiceStatusObservable.next({
-                display: false,
-            })
+            this.changeSocketStatus({
+                display: true,
+                type: "warning",
+                description: "Problem connecting to the web server"
+            });
         });
 
     }
@@ -145,6 +148,10 @@ export class SocketIoService{
 
             callBackFunction(this, payload);
         });*/
+    }
+
+    protected changeSocketStatus(data : any) {
+        this.currentSocketServiceStatusObservable.next(data);
     }
 
 }

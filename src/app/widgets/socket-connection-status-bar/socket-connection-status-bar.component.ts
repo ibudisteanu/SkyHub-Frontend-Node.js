@@ -10,6 +10,7 @@ export class SocketConnectionStatusBarComponent {
 
     private display: boolean = false;
     private description : string = 'Problem with your internet connection';
+    private backgroundColor : string = '#f8f8f8';
 
     constructor(
         private socketServ: SocketIoService
@@ -20,6 +21,17 @@ export class SocketConnectionStatusBarComponent {
 
             if (data.hasOwnProperty('description'))
                 this.description = data.description;
+
+            this.backgroundColor = '#f8f8f8';
+            if (data.hasOwnProperty('type'))
+                switch (data.type){
+                    case "warning":
+                        this.backgroundColor  = "orange";
+                        break;
+                    case "error":
+                        this.backgroundColor = "red";
+                        break;
+                }
 
         });
     }
