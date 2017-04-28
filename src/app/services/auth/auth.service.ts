@@ -58,7 +58,13 @@ export class AuthService {
         */
     }
 
-    public registerAsync(sUsername, sEmailAddress, sPassword, sFirstName, sLastName, sCountry){
+    public registerAsync(sUsername, sEmailAddress, sPassword, sFirstName, sLastName, sCountry, sCity){
+
+        return new Promise( (resolve)=> {
+
+
+
+        });
 
     }
 

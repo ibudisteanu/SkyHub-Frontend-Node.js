@@ -1,105 +1,149 @@
+
 <body class="hold-transition register-page">
-<div class="register-box">
-  <div class="register-logo">
-    <a href="../../index2.html"><b>SkyHub</b>2</a>
-  </div>
-
-  <div class="register-box-body">
-    <p class="login-box-msg">Register a new membership</p>
-
-    <form (submit)="registerForm()" >
-
-
-
-      <div class="row">
-        <div class="col-sm-6" >
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="First name" required minlength="2" name="firstNameInput" [(ngModel)]="sFirstName" #firstNameInput="ngModel">
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            <div *ngIf="firstNameInput.errors && (firstNameInput.dirty || firstNameInput.touched)" class="alert alert-danger">
-              <div [hidden]="!firstNameInput.errors.required">
-                First Name is required
-              </div>
-              <div [hidden]="!firstNameInput.errors.minlength">
-                First Name min 2 characters
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="col-sm-6">
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="Last name" required minlength="2" name="lastNameInput" [(ngModel)]="sLastName" #lastNameInput="ngModel">
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            <div *ngIf="lastNameInput.errors && (lastNameInput.dirty || lastNameInput.touched)" class="alert alert-danger">
-              <div [hidden]="!lastNameInput.errors.required">
-                Last Name is required
-              </div>
-              <div [hidden]="!lastNameInput.errors.minlength">
-                Last Name min 2 characters
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" required minlength="3" name="passwordInput" [(ngModel)]="sPassword" #passwordInput="ngModel">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        <div *ngIf="passwordInput.errors && (passwordInput.dirty || passwordInput.touched)"
-             class="alert alert-danger">
-          <div [hidden]="!passwordInput.errors.required">
-            Password is required
-          </div>
-          <div [hidden]="!passwordInput.errors.minlength">
-            Minimum 3 chars
-          </div>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Retype password" name="retypePasswordInput" [(ngModel)]="sRetypePassword" #retypePasswordInput="ngModel">
-        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-        <div *ngIf="retypePasswordInput.errors && (retypePasswordInput.dirty || retypePasswordInput.touched)"
-             class="alert alert-danger">
-          <div [hidden]="!retypePasswordInput.errors.required">
-            Password is required
-          </div>
-          <div [hidden]="!retypePasswordInput.errors.minlength">
-            Minimum 3 chars
-          </div>
-
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">
-
-        </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" (click)="registerForm()">Register</button>
-        </div>
-        <!-- /.col -->
-      </div>
-    </form>
-
-    <div class="social-auth-links text-center">
-      <p>- OR -</p>
-
-      <div class="text-center">
-        <a href="#" class="btn btn-social-icon btn-facebook "><i class="fa fa-facebook"></i> </a>
-        <a href="#" class="btn btn-social-icon btn-google "><i class="fa fa-google-plus"></i></a>
-      </div>
-
+  <div class="register-box" style="width: 420px">
+    <div class="register-logo">
+      <a href="../../index2.html"><b>SkyHub</b>2</a>
     </div>
 
-    <a routerLink="/login" class="text-center">I already have a membership</a>
+    <div class="register-box-body">
+      <p class="login-box-msg"> <b>Register</b> a new membership</p>
+
+      <form (submit)="registerForm()" >
+
+
+
+        <div class="row">
+          <div class="col-sm-6" >
+            <div class="form-group has-feedback">
+              <input type="text" class="form-control" placeholder="First name" required minlength="2" name="firstNameInput" [(ngModel)]="sFirstName" #firstNameInput="ngModel">
+              <span class="glyphicon glyphicon-user form-control-feedback"></span>
+              <div *ngIf="firstNameInput.errors && (firstNameInput.dirty || firstNameInput.touched)" class="alert alert-danger">
+                <div [hidden]="!firstNameInput.errors.required">
+                  First Name is required
+                </div>
+                <div [hidden]="!firstNameInput.errors.minlength">
+                  First Name min 2 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-6">
+            <div class="form-group has-feedback">
+              <input type="text" class="form-control" placeholder="Last name" required minlength="2" name="lastNameInput" [(ngModel)]="sLastName" #lastNameInput="ngModel">
+              <span class="glyphicon glyphicon-user form-control-feedback"></span>
+              <div *ngIf="lastNameInput.errors && (lastNameInput.dirty || lastNameInput.touched)" class="alert alert-danger">
+                <div [hidden]="!lastNameInput.errors.required">
+                  Last Name is required
+                </div>
+                <div [hidden]="!lastNameInput.errors.minlength">
+                  Last Name min 2 characters
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback">
+          <input type="email" class="form-control" placeholder="Email">
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+
+        <div class="row">
+
+          <div class="col-sm-6" >
+            <div class="form-group has-feedback">
+              <input type="password" class="form-control" placeholder="Password" required minlength="3" name="passwordInput" [(ngModel)]="sPassword" #passwordInput="ngModel">
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              <div *ngIf="passwordInput.errors && (passwordInput.dirty || passwordInput.touched)"
+                   class="alert alert-danger">
+                <div [hidden]="!passwordInput.errors.required">
+                  Password is required
+                </div>
+                <div [hidden]="!passwordInput.errors.minlength">
+                  Minimum 3 chars
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-sm-6" >
+            <div class="form-group has-feedback">
+              <input type="password" class="form-control" placeholder="Retype password" name="retypePasswordInput" [(ngModel)]="sRetypePassword" #retypePasswordInput="ngModel">
+              <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+              <div *ngIf="retypePasswordInput.errors && (retypePasswordInput.dirty || retypePasswordInput.touched)"
+                   class="alert alert-danger">
+                <div [hidden]="!retypePasswordInput.errors.required">
+                  Password is required
+                </div>
+                <div [hidden]="!retypePasswordInput.errors.minlength">
+                  Minimum 3 chars
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6" >
+            <div class="form-group has-feedback">
+
+              <input type="text" id="countryInput" style="height: 30px;" />
+              <input type="hidden" id="countryInput_code" name="countryInput_code" [(ngModel)]="sCountry" #countryInput_code="ngModel" />
+
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+
+            <div class="form-group has-feedback">
+              <input id="cityInput" type="text" class="form-control" placeholder="City" required minlength="2" name="cityInput" [(ngModel)]="sCity" #cityInput="ngModel">
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              <div *ngIf="cityInput.errors && (cityInput.dirty || cityInput.touched)"
+                   class="alert alert-danger">
+                <div [hidden]="!cityInput.errors.required">
+                  City is required
+                </div>
+                <div [hidden]="!cityInput.errors.minlength">
+                  Minimum 2 chars
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-8">
+
+          </div>
+          <!-- /.col -->
+          <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat" (click)="registerForm()">Register</button>
+          </div>
+          <!-- /.col -->
+        </div>
+
+      </form>
+
+      <div class="social-auth-links text-center">
+        <p>- OR -</p>
+
+        <div class="text-center">
+          <a href="#" class="btn btn-social-icon btn-facebook "><i class="fa fa-facebook"></i> </a>
+          <a href="#" class="btn btn-social-icon btn-google "><i class="fa fa-google-plus"></i></a>
+        </div>
+
+      </div>
+
+      <a routerLink="/login" class="text-center">I already have a membership</a>
+    </div>
+    <!-- /.form-box -->
   </div>
-  <!-- /.form-box -->
-</div>
 <!-- /.register-box -->
 </body>

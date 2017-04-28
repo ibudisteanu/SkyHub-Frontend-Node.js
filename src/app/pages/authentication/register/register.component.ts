@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 
 import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
+import { ScriptsService } from '../../../services/scripts/scripts.service';
 
 import { AuthService } from '../../../services/auth/auth.service';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-register',
@@ -19,12 +21,14 @@ export class RegisterComponent implements OnInit {
   private sFirstName : string;
   private sLastName : string;
   private sCountry : string;
+  private sCity : string;
 
 
   constructor(
       private userServ: UserService,
       //private restServ: RestService,
       private authServ: AuthService,
+      private scriptsServ: ScriptsService,
       private router: Router
   ) {
     // TODO
@@ -32,18 +36,27 @@ export class RegisterComponent implements OnInit {
 
   public ngOnInit() {
     // TODO
+
+
+    this.scriptsServ.load('countrySelect', 'countrySelectCSS', 'countrySelectPersonalCSS', 'countrySelectRegistrationInitialization').then(data => {
+      console.log('script loaded ', data);
+
+    }).catch(error => console.log(error));
+
+
+    //$('#demo').flagStrap();
   }
 
   protected registerForm(){
-    this.authServ.loginAsync(this.sEmail, this.sPassword).then((res) => {
+    this.authServ.registerAsync(this.sUserName, this.sEmail, this.sPassword, this.sFirstName, this.sLastName, this.sCountry, this.sCity).then((res) => {
       if (res)
-        this.loginSuccessfully(res);
+        this.registrationSuccessfully(res);
       else
-        this.loginUnsuccessfully(res);
+        this.registrationUnsuccessfully(res);
     });
   }
 
-  protected loginSuccessfully(res){
+  protected registrationSuccessfully(res){
     let user1 = new User( {
       avatarUrl: 'public/assets/img/user2-160x160.jpg',
       email: 'weber.antoine.pro@gmail.com',
@@ -58,7 +71,7 @@ export class RegisterComponent implements OnInit {
     this.router.navigate( ['home'] );
   }
 
-  protected loginUnsuccessfully(res){
+  protected registrationUnsuccessfully(res){
     console.log("ERROR LOGIN");
     console.log("DID U FORGOT YOUR PASSWORD?");
     console.log(res);
