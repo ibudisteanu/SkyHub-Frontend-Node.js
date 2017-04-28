@@ -10,6 +10,7 @@ import { ToasterModule } from 'angular2-toaster/angular2-toaster';
 import { environment } from '../environments/environment';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 
+
 export function createTranslateLoader( http: Http ) {
     return new TranslateStaticLoader( http, '../public/assets/i18n', '.json' );
 }
@@ -27,7 +28,8 @@ let modules = [
         provide: TranslateLoader,
         useFactory: (createTranslateLoader)
     }),
-    ToasterModule
+    ToasterModule,
+
 ];
 
 import { AppComponent } from './app.component';
@@ -67,6 +69,7 @@ import { LoggerService } from './services/logger.service';
 import { SocketIoService } from "./services/rest/socket/socketio.service";
 import { RestService } from "./services/rest/http/rest.service";
 import { AuthService } from "./services/auth/auth.service";
+import { ScriptsService } from "./services/scripts/scripts.service";
 
 let services = [
     UserService,
@@ -79,6 +82,7 @@ let services = [
     SocketIoService,
     RestService,
     AuthService,
+    ScriptsService,
 ];
 
 // les pages
