@@ -17,12 +17,15 @@
             <div class="form-group has-feedback">
               <input type="text" class="form-control" placeholder="First name" required minlength="2" name="firstNameInput" [(ngModel)]="sFirstName" #firstNameInput="ngModel">
               <span class="glyphicon glyphicon-user form-control-feedback"></span>
-              <div *ngIf="firstNameInput.errors && (firstNameInput.dirty || firstNameInput.touched)" class="alert alert-danger">
+              <div *ngIf="(firstNameInput.errors && (firstNameInput.dirty || firstNameInput.touched)) || errorFirstNameMessage " class="alert alert-danger">
                 <div [hidden]="!firstNameInput.errors.required">
                   First Name is required
                 </div>
                 <div [hidden]="!firstNameInput.errors.minlength">
                   First Name min 2 characters
+                </div>
+                <div [hidden]!="!errorFirstNameMessage">
+                  {{ errorFirstNameMessage }}
                 </div>
               </div>
             </div>

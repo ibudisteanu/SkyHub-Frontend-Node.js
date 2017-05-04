@@ -23,6 +23,8 @@ export class RegisterComponent implements OnInit {
   private sCountry : string;
   private sCity : string;
 
+  private errorFirstNameMessage : string;
+  private errorLastNameMessage : string;
 
   constructor(
       private userServ: UserService,
@@ -72,9 +74,11 @@ export class RegisterComponent implements OnInit {
   }
 
   protected registrationUnsuccessfully(res){
-    console.log("ERROR LOGIN");
-    console.log("DID U FORGOT YOUR PASSWORD?");
-    console.log(res);
+
+    this.errorFirstNameMessage = res.errors.firstName;
+    this.errorLastNameMessage = res.errors.lastName;
+    this.errorLastNameMessage = res.errors.lastName;
+
   }
 
 }

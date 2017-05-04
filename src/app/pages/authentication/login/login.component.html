@@ -18,6 +18,17 @@
           <input type="password" class="form-control" placeholder="Password" name="passwordInput" [(ngModel)]="sPassword" #passwordInput="ngModel" required minlength="3" >
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
+
+        <div *ngIf="sErrorMessage" class="alert alert-danger">
+            <h4><i class="icon fa fa-ban"></i> Error</h4>
+            {{sErrorMessage}}
+        </div>
+
+        <div *ngIf="sSuccessfullMessage" class="alert alert-success">
+          <h4><i class="icon fa fa-check"></i> Success</h4>
+          {{sSuccessfullMessage}}
+        </div>
+
         <div class="row">
           <div class="col-xs-8">
             <div class="checkbox checkbox-primary" style="margin-left: 20px;">

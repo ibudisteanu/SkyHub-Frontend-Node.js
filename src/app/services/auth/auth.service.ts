@@ -17,14 +17,14 @@ export class AuthService {
 
     }
 
-    public loginAsync(sEmailUserName, sUserPassword)
+    public loginAsync(sEmailUserName, sPassword)
     {
         this.logout();
 
         return new Promise( (resolve)=> {
 
             //Using Promise
-            this.socketService.sendRequestGetDataPromise("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword}).then( (resData : any) => {
+            this.socketService.sendRequestGetDataPromise("auth/login",{emailUsername:sEmailUserName, password:sPassword}).then( (resData : any) => {
 
                 console.log('Answer from Server Auth Login');
                 console.log(resData);
@@ -62,7 +62,20 @@ export class AuthService {
 
         return new Promise( (resolve)=> {
 
+            //Using Promise
+            this.socketService.sendRequestGetDataPromise("auth/register",{email:sEmailAddress, username: sUsername, password: sPassword,
+                                                                          firstName: sFirstName, lastName: sLastName, country: sCountry, city : sCity }).then( (resData : any) => {
 
+                console.log('Answer from Server Auth Login');
+                console.log(resData);
+
+                if(resData.success) {
+                    this.loginAsync(sEmailAddress, sPassword);
+                }
+
+                resolve(resData);
+
+            });
 
         });
 
@@ -73,7 +86,7 @@ export class AuthService {
 
         return new Promise( (resolve)=>{
 
-            this.restService.postAsync("auth/login", {emailUserName:sEmailUserName,userPassword:sUserPassword} ).then((resData : any) =>{
+            this.restService.postAsync("auth/login", {emailUsername:sEmailUserName,password:sUserPassword} ).then((resData : any) =>{
 
                 if(resData.success) {
                     window.localStorage.setItem('auth_key', resData.token);

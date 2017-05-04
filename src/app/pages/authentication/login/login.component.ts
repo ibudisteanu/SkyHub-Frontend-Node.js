@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit
   private sPassword: string;
   private sEmailUserName: string;
 
+  private sErrorMessage : string;
+  private sSuccessfullMessage : string;
+
   constructor(
     private userServ: UserService,
     //private restServ: RestService,
@@ -32,8 +35,8 @@ export class LoginComponent implements OnInit
 
   protected loginForm() {
 
-    this.authServ.loginAsync(this.sEmailUserName, this.sPassword).then((res) => {
-      if (res)
+    this.authServ.loginAsync(this.sEmailUserName, this.sPassword).then((res : any) => {
+      if ( String( res.result ) === "true")
         this.loginSuccessfully(res);
       else
         this.loginUnsuccessfully(res);
@@ -55,6 +58,10 @@ export class LoginComponent implements OnInit
   }
 
   protected loginSuccessfully(res){
+
+    this.sErrorMessage = '';
+    this.sSuccessfullMessage = res.message;
+
     let user1 = new User( {
       avatarUrl: 'public/assets/img/user2-160x160.jpg',
       email: 'weber.antoine.pro@gmail.com',
@@ -72,6 +79,9 @@ export class LoginComponent implements OnInit
   protected loginUnsuccessfully(res){
     console.log("ERROR LOGIN");
     console.log("DID U FORGOT YOUR PASSWORD?");
+    this.sErrorMessage = res.message;
+    this.sSuccessfullMessage = '';
+
     console.log(res);
   }
 

@@ -1,26 +1,36 @@
+var timerInitializationInterval;
+var countryData = {};
+
 function getCountryAndInitializeCountrySelect()
 {
     try {
         $.getJSON("http://freegeoip.net/json/", function (data) {
 
-            var sCountry = data.country_name;
-            var sCountryCode = data.country_code;
-            var sCity = data.city;
-            var sLatitude = data.latitude;
-            var sLongitude = data.longitude;
+            countryData.sCountry = data.country_name;
+            countryData.sCountryCode = data.country_code;
+            countryData.sCity = data.city;
+            countryData.sLatitude = data.latitude;
+            countryData.sLongitude = data.longitude;
 
             var ip = data.ip;
 
-            console.log(sCountry);
-            console.log(sCountryCode.toLowerCase());
+            console.log(countryData);
 
+            timerInitializationInterval = setInterval(function (){
 
-            $("#countryInput").countrySelect({
-                defaultCountry : sCountryCode.toLowerCase(),
-                preferredCountries: ['ca', 'gb', 'us',  sCountryCode.toLowerCase()]
-            });
+                if (($("#countryInput").length)&&($("#cityInput").length)){
 
-            $("#cityInput").val(sCity);
+                    $("#countryInput").countrySelect({
+                        defaultCountry : countryData.sCountryCode.toLowerCase(),
+                        preferredCountries: ['ca', 'gb', 'us',  countryData.sCountryCode.toLowerCase()]
+                    });
+
+                    $("#cityInput").val(countryData.sCity);
+
+                    clearInterval(timerInitializationInterval);
+                }
+
+            }, 500);
 
         });
     }
