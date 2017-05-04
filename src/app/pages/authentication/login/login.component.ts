@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit
 
     this.sErrorMessage = ''; this.sSuccessfullyMessage = '';
 
+    this.router.navigate( ['/home'] );
+
     this.authServ.loginAsync(this.sEmailUserName, this.sPassword).then((res : any) => {
       if ( String( res.result ) === "true")
         this.loginSuccessfully(res);
@@ -61,21 +63,19 @@ export class LoginComponent implements OnInit
 
   protected loginSuccessfully(res){
 
+
     this.sErrorMessage = '';
     this.sSuccessfullyMessage = res.message;
 
-    let user1 = new User( {
-      avatarUrl: 'public/assets/img/user2-160x160.jpg',
-      email: 'weber.antoine.pro@gmail.com',
-      firstName: 'WEBER',
-      lastName: 'Antoine'
-    } );
+    console.log(res.user);
 
-    user1.connected = true;
+    let userLogged = new User( res.user);
 
-    this.userServ.setCurrentUser( user1 );
+    this.userServ.setCurrentUser( userLogged );
 
-    this.router.navigate( ['home'] );
+    console.log('going to home');
+
+    this.router.navigate( ['/home'] );
   }
 
   protected loginUnsuccessfully(res){

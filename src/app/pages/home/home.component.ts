@@ -41,14 +41,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // defining some test users
     let user1 = new User( {
-        avatarUrl: 'public/assets/img/user2-160x160.jpg',
+        profilePic: 'public/assets/img/user2-160x160.jpg',
         email: 'weber.antoine.pro@gmail.com',
         firstName: 'WEBER',
         lastName: 'Antoine'
     });
 
     let user2 = new User( {
-        avatarUrl: 'public/assets/img/user2-160x160.jpg',
+        profilePic: 'public/assets/img/user2-160x160.jpg',
         email: 'EMAIL',
         firstName: 'FIRSTNAME',
         lastName: 'LASTNAME'
