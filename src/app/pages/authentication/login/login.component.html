@@ -7,7 +7,7 @@
     <div class="login-box-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form (submit)="loginForm()" >
+      <form  >
 
         <div class="form-group has-feedback">
           <input type="text" class="form-control" placeholder="Email or Username" name="emailInput" [(ngModel)]="sEmailUserName" #emailInput="ngModel"  required minlength="3" maxlength="50">
@@ -22,11 +22,13 @@
         <div *ngIf="sErrorMessage" class="alert alert-danger">
             <h4><i class="icon fa fa-ban"></i> Error</h4>
             {{sErrorMessage}}
+
+            Did you <b>forgot your password</b>?
         </div>
 
-        <div *ngIf="sSuccessfullMessage" class="alert alert-success">
+        <div *ngIf="sSuccessfullyMessage" class="alert alert-success">
           <h4><i class="icon fa fa-check"></i> Success</h4>
-          {{sSuccessfullMessage}}
+          {{sSuccessfullyMessage}}
         </div>
 
         <div class="row">

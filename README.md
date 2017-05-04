@@ -124,8 +124,8 @@ It is registred to the user service (for the current user display)
 
 ### User
 
-* *firstname*: string, First Name of the user
-* *lastname* : string, Last Name of the user
+* *firstName*: string, First Name of the user
+* *lastName* : string, Last Name of the user
 * *email* : string, Email address of the user
 * *avatar_url* : string, URL for the user avatar, could be absolute or relative
 * *creation_date* : string, timestamp of the creation of the user
@@ -156,8 +156,8 @@ constructor(
 ...
 ngOnInit(){
   let user = new User({
-    firstname: "WEBER",
-    lastname: "Antoine",
+    firstName: "WEBER",
+    lastName: "Antoine",
     email: "why-not-yop@yopmail.com",
     avatar_url: "assets/img/user2-160x160.jpg"
   });

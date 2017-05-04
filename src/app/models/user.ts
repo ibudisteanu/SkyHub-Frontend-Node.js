@@ -1,6 +1,6 @@
 export class User {
-    public firstname: string;
-    public lastname: string;
+    public firstName: string;
+    public lastName: string;
     public email: string;
     public avatarUrl: string;
     public creationDate: string;
@@ -8,16 +8,16 @@ export class User {
     public connected: boolean = false;
 
     public constructor( data: any = {}) {
-        this.firstname = data.firstname || '';
-        this.lastname = data.lastname || '';
+        this.firstName = data.firstName || '';
+        this.lastName = data.lastName || '';
         this.email = data.email || '';
         this.avatarUrl = data.avatarUrl || '';
         this.creationDate = data.creation_date || Date.now();
-        this.preferredLang = data.preferredLang || null;
+        this.preferredLang = data.preferredLang || data.language || null;
         this.connected = data.connected || false;
     }
 
     public getName() {
-        return this.firstname + ' ' + this.lastname;
+        return this.firstName + ' ' + this.lastName;
     }
 }

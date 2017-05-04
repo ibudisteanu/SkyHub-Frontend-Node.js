@@ -62,8 +62,8 @@ export class RegisterComponent implements OnInit {
     let user1 = new User( {
       avatarUrl: 'public/assets/img/user2-160x160.jpg',
       email: 'weber.antoine.pro@gmail.com',
-      firstname: 'WEBER',
-      lastname: 'Antoine'
+      firstName: 'WEBER',
+      lastName: 'Antoine'
     } );
 
     user1.connected = true;
