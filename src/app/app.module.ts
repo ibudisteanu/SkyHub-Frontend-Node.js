@@ -59,37 +59,39 @@ let widgets = [
     SocketConnectionStatusBarComponent
 ];
 
-import { UserService } from './services/user.service';
 import { MessagesService } from './services/messages.service';
-import { CanActivateGuard } from './services/guard.service';
+import { CanActivateAuthGuard } from './services/auth/auth-guard.service';
 import { NotificationService } from './services/notification.service';
 import { BreadcrumbService } from './services/breadcrumb.service';
 import { AdminLTETranslateService } from './services/translate.service';
 import { LoggerService } from './services/logger.service';
 import { SocketIoService } from "./services/rest/socket/socketio.service";
 import { RestService } from "./services/rest/http/rest.service";
+import { CookiesService } from "./services/auth/cookies/cookies.service";
 import { AuthService } from "./services/auth/auth.service";
 import { ScriptsService } from "./services/scripts/scripts.service";
+import { UserService } from './services/user.service';
 
 let services = [
-    UserService,
     BreadcrumbService,
     MessagesService,
-    CanActivateGuard,
+    CanActivateAuthGuard,
     NotificationService,
     AdminLTETranslateService,
     LoggerService,
     SocketIoService,
     RestService,
     AuthService,
+    CookiesService,
     ScriptsService,
+    UserService,
 ];
 
 // les pages
 import { HomeComponent } from './pages/home/home.component';
 import { PageNumComponent } from './pages/page-num/page-num.component';
 import { ClientComponent } from './pages/client/client.component';
-import { LayoutsAuthComponent } from './pages/layouts/auth/auth';
+import { LayoutWebsiteComponent } from './pages/layouts/website/layout-website.component';
 import { LoginComponent } from './pages/authentication/login/login.component';
 import { RegisterComponent } from './pages/authentication/register/register.component';
 
@@ -97,7 +99,7 @@ let pages = [
     HomeComponent,
     PageNumComponent,
     ClientComponent,
-    LayoutsAuthComponent,
+    LayoutWebsiteComponent,
     LoginComponent,
     RegisterComponent
 ];

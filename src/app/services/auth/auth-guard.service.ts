@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { UserService } from './user.service';
+import { UserService } from '../user.service';
 
 @Injectable()
-export class CanActivateGuard implements CanActivate {
+export class CanActivateAuthGuard implements CanActivate {
   private connected: boolean = false;
 
   constructor(
@@ -17,9 +17,11 @@ export class CanActivateGuard implements CanActivate {
 
   public canActivate() {
     // test here if you user is logged
-    if ( !this.connected ) {
-      this.router.navigate( [ 'login' ] );
-    }
-    return this.connected;
+    // if ( !this.connected ) {
+    //   this.router.navigate( [ 'login' ] );
+    // }
+    // return this.connected;
+
+    return true;
   }
 }

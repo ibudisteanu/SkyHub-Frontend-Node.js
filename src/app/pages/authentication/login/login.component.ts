@@ -69,10 +69,6 @@ export class LoginComponent implements OnInit
 
     console.log(res.user);
 
-    let userLogged = new User( res.user);
-
-    this.userServ.setCurrentUser( userLogged );
-
     console.log('going to home');
 
     this.router.navigate( ['/home'] );

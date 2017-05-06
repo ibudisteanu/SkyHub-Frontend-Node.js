@@ -8,10 +8,12 @@ export class UserService {
     public currentUser: ReplaySubject<User> = new ReplaySubject<User>( 1 );
 
     constructor(
-      private router: Router
+      private router: Router,
     ) {
       // TODO
+
     }
+
 
     public setCurrentUser( user: User ) {
       this.currentUser.next( user );

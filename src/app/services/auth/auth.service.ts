@@ -5,6 +5,9 @@
 import { Injectable } from '@angular/core';
 import {RestService} from '../rest/http/rest.service';
 import {SocketIoService} from '../rest/socket/socketio.service';
+import {CookiesService} from "./cookies/cookies.service";
+import {UserService} from "../user.service";
+import { User } from './../../models/user';
 
 @Injectable()
 export class AuthService {
@@ -12,9 +15,18 @@ export class AuthService {
 
     constructor(
         private restService : RestService,
-        private socketService : SocketIoService
+        private socketService : SocketIoService,
+        private userService: UserService,
+        private cookiesService : CookiesService
     ) {
+        this.loadCookieUser();
+    }
 
+    public loadCookieUser ( ){
+        var token = this.cookiesService.getTokenCookie();
+        if (token !== ""){
+            this.loginTokenAsync(token);
+        }
     }
 
     public loginAsync(sEmailUserName, sPassword)
@@ -29,8 +41,14 @@ export class AuthService {
                 console.log('Answer from Server Auth Login');
                 console.log(resData);
 
-                if(resData.success) {
-                    window.localStorage.setItem('auth_key', resData.token);
+                if(resData.result == "true") {
+
+                    let userLogged = new User( resData.user);
+                    this.userService.setCurrentUser( userLogged );
+
+                    this.cookiesService.setCookie('token', resData.token, 365*5, '/');
+                    console.log('setting cookie'+resData.token);
+
                     this.isLoggedin = true;
                 }
 
@@ -56,6 +74,28 @@ export class AuthService {
          resolve(resData);
          });
         */
+    }
+
+    public loginTokenAsync(token){
+        return new Promise( (resolve)=> {
+            //Using Promise
+            this.socketService.sendRequestGetDataPromise("auth/login-token",{token:token}).then( (resData : any) => {
+
+                console.log('Answer from Login Token Async');
+                console.log(resData);
+
+                if(resData.result == "true") {
+
+                    let userLogged = new User( resData.user);
+                    this.userService.setCurrentUser( userLogged );
+
+                    this.isLoggedin = true;
+                }
+
+                resolve(resData);
+
+            });
+        });
     }
 
     public registerAsync(sUsername, sEmailAddress, sPassword, sFirstName, sLastName, sCountry, sCity){

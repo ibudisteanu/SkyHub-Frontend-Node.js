@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 import { ReplaySubject } from 'rxjs';
+import {CookiesService} from "../../auth/cookies/cookies.service";
 
 //import { Configuration } from '../../app.constants';
 
@@ -20,6 +21,7 @@ export class SocketIoService{
 
     constructor(
         //private config: Configuration
+        private cookiesServ : CookiesService,
     )
     {
         this.currentSocketServiceStatusObservable = new ReplaySubject(1);
@@ -32,7 +34,11 @@ export class SocketIoService{
 
     private createClientSocket()
     {
-        this.socket = io(this.sServerSocketAddress);
+        this.socket = io.connect(this.sServerSocketAddress,{
+            query : "token=" + this.cookiesServ.getTokenCookie() //JWT Token
+            //query: "connect.sid=" + "connect.sid"
+            //query: 'session_id=' + this.readCookie2('connect.sid')
+        });
 
         this.setSocketReadObservable("connect").subscribe( response =>{
 
@@ -85,6 +91,10 @@ export class SocketIoService{
         });
 
     }
+
+    /*
+           FUNCTIONS
+     */
 
     public sendRequest(sRequestName, sRequestData){
 

@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
 import { LoggerService } from '../../../services/logger.service';
-
+import { AuthService } from '../../../services/auth/auth.service';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 import { AdminLTETranslateService } from '../../../services/translate.service';
 
 @Component( {
     selector: 'app-layouts-auth',
-    templateUrl: './auth.html'
+    templateUrl: './layout-website.component.html'
 })
-export class LayoutsAuthComponent implements OnInit {
+export class LayoutWebsiteComponent implements OnInit {
     private toastrConfig: ToasterConfig;
     private logger: LoggerService;
     private mylinks: Array<any> = [];
@@ -18,7 +18,8 @@ export class LayoutsAuthComponent implements OnInit {
     constructor(
       private userServ: UserService,
       private toastr: ToasterService,
-      private translate: AdminLTETranslateService
+      private translate: AdminLTETranslateService,
+      private authService: AuthService,
     ) {
         this.toastrConfig = new ToasterConfig( {
             newestOnTop: true,

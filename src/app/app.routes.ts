@@ -1,42 +1,42 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CanActivateGuard } from './services/guard.service';
+import { CanActivateAuthGuard } from './services/auth/auth-guard.service';
 
 // Components
 import { HomeComponent } from './pages/home/home.component';
 import { PageNumComponent } from './pages/page-num/page-num.component';
 import { ClientComponent } from './pages/client/client.component';
-import { LayoutsAuthComponent } from './pages/layouts/auth/auth';
+import { LayoutWebsiteComponent } from './pages/layouts/website/layout-website.component';
 import { LoginComponent } from './pages/authentication/login/login.component';
 import { RegisterComponent } from './pages/authentication/register/register.component';
 
 const routes: Routes = [
   // logged routes
   {
-    canActivate: [CanActivateGuard],
+    canActivate: [CanActivateAuthGuard],
     children: [
       { //  root page
-        canActivate: [CanActivateGuard],
+        canActivate: [CanActivateAuthGuard],
         component: HomeComponent,
         path: ''
       },
       { //  root page
-        canActivate: [CanActivateGuard],
+        canActivate: [CanActivateAuthGuard],
         component: HomeComponent,
         path: 'home'
       },
       {
-        canActivate: [CanActivateGuard],
+        canActivate: [CanActivateAuthGuard],
         component: PageNumComponent,
         path: 'page/:id'
       },
       {
-        canActivate: [CanActivateGuard],
+        canActivate: [CanActivateAuthGuard],
         component: ClientComponent,
         path: 'client'
       }
     ],
-    component: LayoutsAuthComponent,
+    component: LayoutWebsiteComponent,
     path: '',
   },
   // not logged routes
