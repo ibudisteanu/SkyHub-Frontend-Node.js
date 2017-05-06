@@ -9,6 +9,8 @@ import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
 import { environment } from '../environments/environment';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 
 export function createTranslateLoader( http: Http ) {
@@ -29,7 +31,8 @@ let modules = [
         useFactory: (createTranslateLoader)
     }),
     ToasterModule,
-
+    ModalModule.forRoot(),
+    BootstrapModalModule,
 ];
 
 import { AppComponent } from './app.component';
@@ -44,6 +47,7 @@ import { TasksBoxComponent } from './widgets/tasks-box';
 import { UserBoxComponent } from './widgets/user-box';
 import { BreadcrumbComponent } from './widgets/breadcrumb';
 import { SocketConnectionStatusBarComponent } from './widgets/socket-connection-status-bar';
+import { AuthenticationModalWidgetComponent } from './widgets/authentication-modal';
 
 let widgets = [
     AppComponent,
@@ -56,7 +60,9 @@ let widgets = [
     NotificationBoxComponent,
     TasksBoxComponent,
     UserBoxComponent,
-    SocketConnectionStatusBarComponent
+    SocketConnectionStatusBarComponent,
+
+    AuthenticationModalWidgetComponent
 ];
 
 import { MessagesService } from './services/messages.service';
@@ -91,21 +97,44 @@ let services = [
 import { HomeComponent } from './pages/home/home.component';
 import { PageNumComponent } from './pages/page-num/page-num.component';
 import { ClientComponent } from './pages/client/client.component';
-import { LayoutWebsiteComponent } from './pages/layouts/website/layout-website.component';
+
+import { LoginFormComponent } from './pages/authentication/login/login-form/login-form.component';
 import { LoginComponent } from './pages/authentication/login/login.component';
 import { RegisterComponent } from './pages/authentication/register/register.component';
+
+import { LayoutWebsiteComponent } from './pages/layouts/website/layout-website.component';
+
+import { LayoutAuthenticatedComponent } from './pages/layouts/website/authenticated/layout-authenticated.component';
+import { LayoutNotAuthenticatedComponent } from './pages/layouts/website/not-authenticated/layout-not-authenticated.component';
+
+import { AuthenticationModelWindow } from './widgets/authentication-modal/authentication-modal-window/authentication-modal-window.component';
 
 let pages = [
     HomeComponent,
     PageNumComponent,
     ClientComponent,
+
     LayoutWebsiteComponent,
+    LayoutAuthenticatedComponent,
+    LayoutNotAuthenticatedComponent,
+
+    LoginFormComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+
+    AuthenticationModelWindow,
+
 ];
 
 // main bootstrap
 import { routing } from './app.routes';
+
+// IMPORTANT:
+// Since 'AdditionCalculateWindow' is never explicitly used (in a template)
+// we must tell angular about it.
+let entryComp = [
+    AuthenticationModelWindow,
+];
 
 
 @NgModule( {
@@ -120,6 +149,10 @@ import { routing } from './app.routes';
     ],
     providers: [
         ...services
-    ]
+    ],
+
+
+    entryComponents: entryComp,
+
 })
 export class AppModule { }

@@ -6,6 +6,9 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 import { AdminLTETranslateService } from '../../../services/translate.service';
 
+import { LayoutAuthenticatedComponent } from './authenticated/layout-authenticated.component';
+import { LayoutNotAuthenticatedComponent } from './not-authenticated/layout-not-authenticated.component';
+
 @Component( {
     selector: 'app-layouts-auth',
     templateUrl: './layout-website.component.html'
@@ -20,6 +23,7 @@ export class LayoutWebsiteComponent implements OnInit {
       private toastr: ToasterService,
       private translate: AdminLTETranslateService,
       private authService: AuthService,
+
     ) {
         this.toastrConfig = new ToasterConfig( {
             newestOnTop: true,

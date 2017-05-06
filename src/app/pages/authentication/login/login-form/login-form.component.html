@@ -1,0 +1,58 @@
+<div class="container" style="width: 100%">
+
+    <p class="login-box-msg">Sign in to start your session</p>
+
+    <form>
+
+        <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="Email or Username" name="emailInput" [(ngModel)]="sEmailUserName" #emailInput="ngModel"  required minlength="3" maxlength="50">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+
+        <div class="form-group has-feedback">
+            <input type="password" class="form-control" placeholder="Password" name="passwordInput" [(ngModel)]="sPassword" #passwordInput="ngModel" required minlength="3" >
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+
+        <div *ngIf="sErrorMessage" class="alert alert-danger">
+            <h4><i class="icon fa fa-ban"></i> Error</h4>
+            {{sErrorMessage}}
+
+            Did you <b>forgot your password</b>?
+        </div>
+
+        <div *ngIf="sSuccessfullyMessage" class="alert alert-success">
+            <h4><i class="icon fa fa-check"></i> Success</h4>
+            {{sSuccessfullyMessage}}
+        </div>
+
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="checkbox checkbox-primary" style="margin-left: 20px;">
+                    <label>
+                        <input type="checkbox"> Remember Me
+                    </label>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat" (click)="loginForm()" >Sign In</button>
+            </div>
+            <!-- /.col -->
+        </div>
+    </form>
+
+    <div class="social-auth-links text-center">
+        <p>- OR -</p>
+
+        <div class="text-center">
+            <a href="#" class="btn btn-social-icon btn-facebook "><i class="fa fa-facebook"></i> </a>
+            <a href="#" class="btn btn-social-icon btn-google "><i class="fa fa-google-plus"></i></a>
+        </div>
+
+    </div>
+
+    <a href="#">I forgot my password</a> <br/> <br/>
+    <a routerLink="/register" class="text-center"> <b>Register</b> a new membership</a>
+
+</div>

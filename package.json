@@ -29,6 +29,7 @@
     "admin-lte": "^2.3.8",
     "angular2-countrypicker": "^1.0.0",
     "angular2-jwt": "^0.1.24",
+    "angular2-modal": "^2.0.3",
     "angular2-toaster": "^1.0.2",
     "angular2-uuid": "^1.1.0",
     "angularfire2": "^2.0.0-beta.6",
