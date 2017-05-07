@@ -1,84 +1,41 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,  ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentFactory } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from '../../../models/user';
-import { UserService } from '../../../services/user.service';
-import { ScriptsService } from '../../../services/scripts/scripts.service';
-
-import { AuthService } from '../../../services/auth/auth.service';
-import $ from 'jquery';
+import { RegisterFormComponent } from './registration-form/register-form.component';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html'
+  templateUrl: './register.component.html',
+  entryComponents: [ RegisterFormComponent ]
 })
 export class RegisterComponent implements OnInit {
 
-  private sUserName : string;
-  private sPassword: string;
-  private sEmail: string;
-  private sRetypePassword : string;
-  private sFirstName : string;
-  private sLastName : string;
-  private sCountry : string;
-  private sCity : string;
 
-  private errorFirstNameMessage : string;
-  private errorLastNameMessage : string;
+  @ViewChild('RegisterFormComponentView', {read: ViewContainerRef}) RegisterFormComponentView: ViewContainerRef;
 
   constructor(
-      private userServ: UserService,
-      //private restServ: RestService,
-      private authServ: AuthService,
-      private scriptsServ: ScriptsService,
-      private router: Router
+
+      private compFactoryResolver: ComponentFactoryResolver,
   ) {
     // TODO
   }
 
+
+  public initializeRegisterTemplate(){
+    let compFactory: ComponentFactory <any>;
+
+    compFactory = this.compFactoryResolver.resolveComponentFactory(RegisterFormComponent);
+    this.RegisterFormComponentView.createComponent(compFactory);
+
+  }
+
+
   public ngOnInit() {
-    // TODO
+    window.dispatchEvent( new Event( 'resize' ) );
 
-
-    this.scriptsServ.load('countrySelect', 'countrySelectCSS', 'countrySelectPersonalCSS', 'countrySelectRegistrationInitialization').then(data => {
-      console.log('script loaded ', data);
-
-    }).catch(error => console.log(error));
-
-
-    //$('#demo').flagStrap();
+    this.initializeRegisterTemplate();
   }
 
-  protected registerForm(){
-    this.authServ.registerAsync(this.sUserName, this.sEmail, this.sPassword, this.sFirstName, this.sLastName, this.sCountry, this.sCity).then((res) => {
-      if (res)
-        this.registrationSuccessfully(res);
-      else
-        this.registrationUnsuccessfully(res);
-    });
-  }
 
-  protected registrationSuccessfully(res){
-    let user1 = new User( {
-      profilePic: 'public/assets/img/user2-160x160.jpg',
-      email: 'weber.antoine.pro@gmail.com',
-      firstName: 'WEBER',
-      lastName: 'Antoine'
-    } );
-
-    user1.connected = true;
-
-    this.userServ.setCurrentUser( user1 );
-
-    this.router.navigate( ['home'] );
-  }
-
-  protected registrationUnsuccessfully(res){
-
-    this.errorFirstNameMessage = res.errors.firstName;
-    this.errorLastNameMessage = res.errors.lastName;
-    this.errorLastNameMessage = res.errors.lastName;
-
-  }
 
 }

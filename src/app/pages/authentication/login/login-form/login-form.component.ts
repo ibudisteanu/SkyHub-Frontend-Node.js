@@ -21,12 +21,14 @@ export class LoginFormComponent  implements OnInit
     private sErrorMessage : string;
     private sSuccessfullyMessage : string;
 
+    public OnLoginSuccessfully : any = null;
+    public OnLoginUnsuccessfully : any = null;
+
     constructor(
         private userServ: UserService,
         //private restServ: RestService,
         private authServ: AuthService,
         private router: Router,
-        private compFactoryResolver: ComponentFactoryResolver,
     )
     {
     }
@@ -47,7 +49,6 @@ export class LoginFormComponent  implements OnInit
             else
                 this.loginUnsuccessfully(res);
         });
-
 
     }
 
@@ -71,9 +72,14 @@ export class LoginFormComponent  implements OnInit
 
         console.log(res.user);
 
-        console.log('going to home');
+        if (this.OnLoginSuccessfully== null){
 
-        this.router.navigate( ['/home'] );
+            this.router.navigate( ['/home'] );
+
+        } else {
+            this.OnLoginSuccessfully (true);
+        }
+
     }
 
     protected loginUnsuccessfully(res){
@@ -81,6 +87,14 @@ export class LoginFormComponent  implements OnInit
         this.sSuccessfullyMessage = '';
 
         console.log(res);
+
+        if (this.OnLoginUnsuccessfully == null){
+
+
+        } else  {
+            this.OnLoginUnsuccessfully(true);
+        }
+
     }
 
     private logOut(){

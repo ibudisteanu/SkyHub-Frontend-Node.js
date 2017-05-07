@@ -11,7 +11,7 @@ export const ScriptStore: Scripts[] = [
 
 
     {name: 'countrySelectRegistrationInitialization', scriptTag : 'script', scriptType : 'text/javascript',
-        src: 'src/app/pages/authentication/register/register-country-select-initialization.js' },
+        src: 'src/app/pages/authentication/register/registration-form/register-country-select-initialization.js' },
 
     {name: 'countrySelect', scriptTag : 'script', scriptType : 'text/javascript',
         src: 'https://cdn.rawgit.com/mrmarkfrench/country-select-js/master/build/js/countrySelect.min.js', },
@@ -20,7 +20,7 @@ export const ScriptStore: Scripts[] = [
         src: 'https://cdn.rawgit.com/mrmarkfrench/country-select-js/master/build/css/countrySelect.css'},
 
     {name: 'countrySelectPersonalCSS', scriptTag : 'link', scriptType : 'text/css',
-        src: 'src/app/pages/authentication/register/register-country-select-initialization.css'},
+        src: 'src/app/pages/authentication/register/registration-form/register-country-select-initialization.css'},
 ];
 
 // src: '../../../pages/authentication/register/register-country-select-initialization.js' },

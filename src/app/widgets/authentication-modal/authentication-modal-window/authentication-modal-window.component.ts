@@ -4,11 +4,11 @@ import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 
 import {LoginFormComponent} from './../../../pages/authentication/login/login-form/login-form.component';
-import {RegisterComponent} from './../../../pages/authentication/register/register.component';
+import {RegisterFormComponent} from './../../../pages/authentication/register/registration-form/register-form.component';
 
 export class AuthenticationModelWindowContext extends BSModalContext {
-    public num1: number;
-    public num2: number;
+    public bDisplayRegistration = false;
+    public bDisplayLogin = true;
 }
 
 /**
@@ -21,6 +21,8 @@ export class AuthenticationModelWindowContext extends BSModalContext {
     entryComponents: [ LoginFormComponent,   ]
 })
 export class AuthenticationModelWindow implements CloseGuard, ModalComponent<AuthenticationModelWindowContext> {
+
+
     context: AuthenticationModelWindowContext;
 
     public wrongAnswer: boolean;
@@ -42,10 +44,14 @@ export class AuthenticationModelWindow implements CloseGuard, ModalComponent<Aut
         let compFactory: ComponentFactory <any>;
 
         compFactory = this.compFactoryResolver.resolveComponentFactory(LoginFormComponent);
-        this.LoginFormComponentView.createComponent(compFactory);
+        let loginFormComponent = this.LoginFormComponentView.createComponent(compFactory,0).instance;
+
+        loginFormComponent.sPassword = "ss";
+        loginFormComponent.OnLoginSuccessfully = this.loginSuccessfully;
+        loginFormComponent.OnLoginUnsuccessfully = this.loginUnsuccessfully;
 
 
-        compFactory = this.compFactoryResolver.resolveComponentFactory(RegisterComponent);
+        compFactory = this.compFactoryResolver.resolveComponentFactory(RegisterFormComponent);
         this.RegisterFormComponentView.createComponent(compFactory);
     }
 
@@ -53,17 +59,38 @@ export class AuthenticationModelWindow implements CloseGuard, ModalComponent<Aut
         this.initializeLoginRegistration();
     }
 
-    onKeyUp(value) {
-        this.wrongAnswer = value != 5;
-        this.dialog.close();
-    }
-
 
     beforeDismiss(): boolean {
-        return true;
+        return false;
     }
 
     beforeClose(): boolean {
-        return this.wrongAnswer;
+        return false;
     }
+
+    protected modalClose(){
+        this.dialog.close();
+    }
+
+    protected showRegistrationForm(){
+        this.context.bDisplayLogin = false;
+        this.context.bDisplayRegistration = true;
+
+    }
+
+    protected showLoginForm(){
+        this.context.bDisplayLogin = true;
+        this.context.bDisplayRegistration = false;
+
+    }
+
+    public loginSuccessfully() {
+
+    }
+
+    public loginUnsuccessfully(){
+        this.modalClose();
+    }
+
+
 }

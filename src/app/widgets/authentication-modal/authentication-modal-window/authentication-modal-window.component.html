@@ -1,269 +1,49 @@
 
-<div class="container-fluid custom-modal-container">
-    <div class="row custom-modal-header">
-        <div class="col-sm-12">
-            <h1>Login to SkyHub </h1>
-        </div>
-    </div>
-    <div class="row" [ngClass]="{'myclass' : shouldUseMyClass}">
-        <div class="col-xs-12">
-            <div class="jumbotron">
-
-                <div id="popupAuthenticationModal" class="popupContainer" style="display: block; top: 50%; margin-top: -157px; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -200px;">
-                    <header class="popupHeader">
-                        <span class="popupTitle">Login to SkyHub Forum Social Network</span>
-                        <span id="btnPopupAuthenticationModalClose" class="modal_close"><i class="fa fa-times"></i></span>
-                    </header>
-
-                    <section class="popupBody">
-
-                        <template #LoginFormComponentView></template>
-
-                        <hr>
-
-                        <template #RegisterFormComponentView></template>
-
-                        <!-- Social Login -->
-                        <div class="popupLogin">
-
-                            <h5>sub1.html goes here</h5>
-                            <div class="container">
-                                <template #subContainer1></template>
-                            </div>
+<div class="popupContainer">
 
 
-                            <hr>
-                            <h5>sub2.html goes here</h5>
-                            <div class="container">
-                                <template #subContainer2></template>
-                            </div>
+    <div id="popupAuthenticationModal" class="popupContainer" style="display: block; top: 50%; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -200px;">
+        <header class="popupHeader">
+            <span class="popupTitle">Login to SkyHub Forum Social Network</span>
+            <span id="btnPopupAuthenticationModalClose" class="modal_close"><i class="fa fa-times" style="color: red" (click)="modalClose()"></i></span>
+        </header>
 
-                            <form id="loginform" class="form-horizontal" action="http://127.0.0.1/login#Login" role="form" onsubmit="return validateLoginFormPost(this,1);" method="post">
+        <section class="popupBody">
 
-                                <div class="form-group has-feedback" style="margin: 0px !important;">
-                                    <div class="input-group" style="margin-bottom: 15px">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username1" type="text" class="form-control" name="login-username" value="" placeholder="username or email" onkeyup="validateLoginForm(this,1)" onmousedown="validateLoginForm(this, 1)">
-                                        <i id="login-username1-feedback" class="form-control-feedback"></i>
-                                    </div>
+            <div [hidden]="!context.bDisplayLogin">
 
-                                    <div class="input-group" style="margin-bottom: 15px">
-                                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                        <input id="login-password1" type="password" class="form-control" name="login-password" placeholder="password" onkeyup="validateLoginForm(this,1)" onmousedown="validateLoginForm(this,1)">
-                                        <i id="login-password1-feedback" class="form-control-feedback"></i>
-                                    </div>
-                                </div>
+                <template #LoginFormComponentView></template>
 
-                                <input type="hidden" name="val" value="checkin">
+                <div class="popupActionsBtns" style="padding-top:15px; padding-bottom: 6px">
 
-                                <div class="input-group" style="margin-top: -10px">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input id="login-remember" type="checkbox" name="remember" value="1" checked=""> Remember me
-                                        </label>
-                                    </div>
-                                </div>
+                    <div class="col-md-12 center-block text-center">
+                        <button id="btnPopupAuthenticationRegister" class="btn btn-primary" (click)="showRegistrationForm()">
+                            Go to REGISTRATION <i class="fa fa-angle-double-right"></i>
+                        </button>
+                    </div>
 
-
-                                <div style="margin-top:10px; margin-bottom:0px;" class="form-group">
-
-                                    <div class="col-sm-12 controls">
-                                        <button id="login-submitButton1" type="submit" value="Login" class="btn btn-success" style="margin-right:20px; margin-bottom: 10px;">
-                                            <i class="fa fa-sign-in"></i> Login
-                                        </button>
-
-
-                                        <a href="http://127.0.0.1/signup/facebook?go=go" class="btn btn-social-icon btn-facebook" style="margin-bottom: 10px;"><i class="fa fa-facebook"></i></a>
-
-                                        <a href="http://127.0.0.1/signup/google?go=go" class="btn btn-social-icon btn-google" style="margin-bottom: 10px;"><i class="fa fa-google"></i></a>
-                                        <!--<a href="http://127.0.0.1/signup/twitter?go=go"class="btn btn-social-icon btn-twitter" style="margin-bottom: 10px;"><i class="fa fa-twitter"></i></a> -->
-                                        <a href="http://127.0.0.1/signup/linkedin?go=go" class="btn btn-social-icon btn-linkedin" style="margin-bottom: 10px;"><i class="fa fa-linkedin"></i></a>
-
-                                        <!--<a href="http://127.0.0.1/signup/yahoo?go=go"class="btn btn-social-icon btn-yahoo" style="margin-bottom: 10px;"><i class="fa fa-yahoo"></i></a>
-                                        <a class="btn btn-social-icon btn-instagram" style="margin-bottom: 10px;"><i class="fa fa-instagram"></i></a>
-                                        <a class="btn btn-social-icon btn-tumblr" style="margin-bottom: 10px;"><i class="fa fa-tumblr"></i></a>
-                                        <a class="btn btn-social-icon btn-github" style="margin-bottom: 10px;"><i class="fa fa-github"></i></a>
-                                        <a class="btn btn-social-icon btn-vk" style="margin-bottom: 10px;"><i class="fa fa-vk"></i></a>-->
-
-                                        <!--
-                                        <a class="btn btn-social-icon btn-bitbucket"><i class="fa fa-bitbucket"></i></a>
-                                        <a class="btn btn-social-icon btn-dropbox"><i class="fa fa-dropbox"></i></a>
-                                        <a class="btn btn-social-icon btn-flickr"><i class="fa fa-flickr"></i></a>
-                                        <a class="btn btn-social-icon btn-foursquare"><i class="fa fa-foursquare"></i></a> -->
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group" style="margin-bottom: 0;">
-                                    <div class="col-md-12 control">
-                                        <div style="border-top: 1px solid#888; padding-top:10px; font-size:85%">
-                                            Don't have an account?
-                                            <a href="http://127.0.0.1/#Registration" onclick="$('#loginbox').hide(); $('#signupbox').show()" >
-                                                <strong>Sign Up Now</strong>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </form>
-
-
-                            <div class="popupActionsBtns" style="padding-top:15px; padding-bottom: 6px">
-
-                                <div class="col-md-12 center-block text-center">
-                                    <button id="btnPopupAuthenticationRegister" class="btn btn-primary">
-                                        Go to REGISTRATION <i class="fa fa-angle-double-right"></i>
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- Register Form -->
-                        <div class="popupRegister" style="display: none;">
-
-                            <form id="registration-form" class="form-horizontal toggle-disabled" action="http://127.0.0.1/#Registration" role="form" method="post">
-
-
-                                <div class="form-group has-feedback" style="margin-bottom: 0px !important;">
-                                    <div class="col-sm-5">
-                                        <div style="margin-bottom: 15px" class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                            <input id="register-username1" type="text" class="form-control" name="register-username" value="" placeholder="username" onkeyup="validateRegistrationForm(this,1)">
-                                            <i id="register-username1-feedback" class="form-control-feedback"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-7">
-                                        <div style="margin-bottom: 15px" class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                            <input id="register-email1" type="text" class="form-control" name="register-email" value="" placeholder="email" onkeyup="validateRegistrationForm(this,1)">
-                                            <i id="register-email1-feedback" class="form-control-feedback"></i>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group has-feedback" style="margin-bottom: 0px !important;">
-                                    <div class="col-sm-6">
-                                        <div style="margin-bottom: 15px" class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-font"></i></span>
-                                            <input id="register-firstName1" type="text" class="form-control" name="register-firstName" value="" placeholder="First Name" onkeyup="validateRegistrationForm(this,1)">
-                                            <i id="register-firstName1-feedback" class="form-control-feedback"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <div style="margin-bottom: 15px" class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-bold"></i></span>
-                                            <input id="register-lastName1" type="text" class="form-control" name="register-lastName" value="" placeholder="Last Name" onkeyup="validateRegistrationForm(this,1)">
-                                            <i id="register-lastName1-feedback" class="form-control-feedback"></i>
-                                        </div>
-                                    </div>
-
-                                </div><!--/form-group-->
-
-                                <div class="form-group has-feedback" style="margin-bottom: 0 !important;">
-                                    <div class="col-sm-6">
-                                        <div style="margin-bottom: 15px;" class="input-group">
-
-                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                            <input id="register-password1" type="password" class="form-control" name="register-password" placeholder="password" onkeyup="validateRegistrationForm(this, 1)">
-                                            <i id="register-password1-feedback" class="form-control-feedback"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div style="margin-bottom: 15px;" class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                            <input id="register-passwordConfirmation1" type="password" class="form-control" name="register-passwordConfirmation" placeholder="retype password" onkeyup="validateRegistrationForm(this, 1)">
-                                            <i id="register-passwordConfirmation1-feedback" class="form-control-feedback"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group has-feedback" style="margin-bottom: 0 !important;">
-                                    <div class="col-sm-6">
-                                        <div style="margin-bottom: 15px;" class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-institution"></i></span>
-                                            <input id="register-city1" type="text" class="form-control" name="register-city" value="Craiova" onkeyup="validateRegistrationForm(this, 1)">
-                                            <i id="register-city1-feedback" class="form-control-feedback"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-item" style="text-align: left;  ">
-
-                                            <i id="register-countrySelectorCode1-feedback" class="form-control-feedback" style="margin-right: 0 !important;"></i>
-                                        </div>
-                                        <!--<div class="form-item" style="display:none; text-align: left;">
-                                            <input type="text" id="countrySelectorCode" name="register-country" data-countrycodeinput="1"   readonly="readonly" placeholder="Selected country code will appear here"  >
-                                            <label for="countrySelectorCode">...and the selected country code will be updated here</label>
-                                        </div> -->
-                                    </div>
-                                </div>
-
-
-                                <input type="hidden" name="val" value="register">
-
-                                <div class="form-group" style="text-align: center">
-                                    <button type="submit" id="register-submitButton" onclick="return validateRegistrationFormPost(this, 1);" class="btn btn-success">
-                                        <i class="fa fa-sign-in"></i> Register
-                                    </button>
-
-                                    <span style="margin-left:8px; color:black;">or</span>
-                                </div>
-
-
-
-                                <div style="border-top: 1px solid #999; padding-top:20px" class="form-group">
-
-                                    <div class="" style="margin: -15px 0 10px 0; text-align: center">
-                                        <span style="color:black;">signup with:</span>
-                                    </div>
-
-                                    <div class="col-md-12" style="text-align: center">
-
-                                        <a href="http://127.0.0.1/signup/facebook?go=go" class="btn btn-social-icon btn-facebook" style="margin-bottom: 10px;"><i class="fa fa-facebook"></i></a>
-
-                                        <a href="http://127.0.0.1/signup/google?go=go" class="btn btn-social-icon btn-google" style="margin-bottom: 10px;"><i class="fa fa-google"></i></a>
-                                        <!--<a href="http://127.0.0.1/signup/twitter?go=go"class="btn btn-social-icon btn-twitter" style="margin-bottom: 10px;"><i class="fa fa-twitter"></i></a> -->
-                                        <a href="http://127.0.0.1/signup/linkedin?go=go" class="btn btn-social-icon btn-linkedin" style="margin-bottom: 10px;"><i class="fa fa-linkedin"></i></a>
-
-                                        <!--<a href="http://127.0.0.1/signup/yahoo?go=go"class="btn btn-social-icon btn-yahoo" style="margin-bottom: 10px;"><i class="fa fa-yahoo"></i></a>
-                                        <a class="btn btn-social-icon btn-instagram" style="margin-bottom: 10px;"><i class="fa fa-instagram"></i></a>
-                                        <a class="btn btn-social-icon btn-tumblr" style="margin-bottom: 10px;"><i class="fa fa-tumblr"></i></a>
-                                        <a class="btn btn-social-icon btn-github" style="margin-bottom: 10px;"><i class="fa fa-github"></i></a>
-                                        <a class="btn btn-social-icon btn-vk" style="margin-bottom: 10px;"><i class="fa fa-vk"></i></a>-->
-
-                                        <!--
-                                        <a class="btn btn-social-icon btn-bitbucket"><i class="fa fa-bitbucket"></i></a>
-                                        <a class="btn btn-social-icon btn-dropbox"><i class="fa fa-dropbox"></i></a>
-                                        <a class="btn btn-social-icon btn-flickr"><i class="fa fa-flickr"></i></a>
-                                        <a class="btn btn-social-icon btn-foursquare"><i class="fa fa-foursquare"></i></a> -->
-                                    </div>
-                                </div>
-
-
-                            </form>
-
-
-
-
-                            <div class="popupActionsBtns" style="padding-top:10px; padding-bottom: 6px; ">
-                                <div class="col-md-12 center-block text-center">
-                                    <button id="btnPopupAuthenticationLogin" class="btn btn-danger">
-                                        <i class="fa fa-angle-double-left"> Back to LOGIN</i>
-                                    </button>
-                                    <div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
 
-
             </div>
-        </div>
+
+            <div [hidden]="!context.bDisplayRegistration ">
+                <template #RegisterFormComponentView></template>
+
+                <div class="popupActionsBtns" style="padding-top:10px; padding-bottom: 6px; ">
+                    <div class="col-md-12 center-block text-center">
+                        <button id="btnPopupAuthenticationLogin" class="btn btn-danger" (click)="showLoginForm()" >
+                            <i class="fa fa-angle-double-left"> Back to LOGIN</i>
+                        </button>
+                        <div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </section>
     </div>
+
 </div>

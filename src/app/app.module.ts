@@ -101,6 +101,7 @@ import { ClientComponent } from './pages/client/client.component';
 import { LoginFormComponent } from './pages/authentication/login/login-form/login-form.component';
 import { LoginComponent } from './pages/authentication/login/login.component';
 import { RegisterComponent } from './pages/authentication/register/register.component';
+import { RegisterFormComponent } from './pages/authentication/register/registration-form/register-form.component';
 
 import { LayoutWebsiteComponent } from './pages/layouts/website/layout-website.component';
 
@@ -120,6 +121,7 @@ let pages = [
 
     LoginFormComponent,
     LoginComponent,
+    RegisterFormComponent,
     RegisterComponent,
 
     AuthenticationModelWindow,
@@ -133,7 +135,7 @@ import { routing } from './app.routes';
 // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
 // we must tell angular about it.
 let entryComp = [
-    AuthenticationModelWindow,
+    AuthenticationModelWindow, RegisterFormComponent,
 ];
 
 

@@ -31,18 +31,7 @@ import {  AuthenticationModelWindowContext, AuthenticationModelWindow } from './
 
 export class AuthenticationModalWidgetComponent implements OnInit
 {
-    private sPassword: string;
-    private sEmailUserName: string;
-
-    private sErrorMessage : string;
-    private sSuccessfullyMessage : string;
-
     constructor(
-        private userServ: UserService,
-        //private restServ: RestService,
-        private authServ: AuthService,
-        private router: Router,
-
 
         private  vcRef: ViewContainerRef,
         private modal : Modal,
@@ -57,12 +46,11 @@ export class AuthenticationModalWidgetComponent implements OnInit
         window.dispatchEvent( new Event( 'resize' ) );
 
 
-        this.showModal();
+        this.showModal(false, true);
     }
 
-    public showModal() {
-        //this.modal.open(AdditionCalculateWindow, new AdditionCalculateWindowData(2, 3) );
-        return this.modal.open(AuthenticationModelWindow,  overlayConfigFactory({ num1: 2, num2: 3 }, BSModalContext));
+    public showModal(bShowLogin, bShowRegistration) {
+        return this.modal.open(AuthenticationModelWindow,  overlayConfigFactory({ bDisplayRegistration: bShowLogin, bDisplayLogin: bShowRegistration }, BSModalContext));
     }
 
     public showMessageModal(){
@@ -82,6 +70,14 @@ export class AuthenticationModalWidgetComponent implements OnInit
                 <li>HTML content</li>
             </ul>`)
             .open();
+    }
+
+    public showLoginModal(){
+        this.showModal(false, true);
+    }
+
+    public showRegistrationModal(){
+        this.showModal(true, false);
     }
 
 }

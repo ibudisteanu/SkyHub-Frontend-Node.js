@@ -1,17 +1,23 @@
-<div class="container" style="width: 100%">
+<div class="login-box-body">
 
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg"> <strong>Login</strong> to SkyHub</p>
 
     <form>
 
-        <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="Email or Username" name="emailInput" [(ngModel)]="sEmailUserName" #emailInput="ngModel"  required minlength="3" maxlength="50">
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <div class="form-group has-feedback"  style="margin: 0px !important;" >
+            <div class="input-group" style="margin-bottom: 15px">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input type="text" class="form-control" placeholder="Email or Username" name="emailInput" [(ngModel)]="sEmailUserName" #emailInput="ngModel"  required minlength="3" maxlength="50">
+                <i id="register-username1-feedback" class="form-control-feedback"></i>
+            </div>
         </div>
 
-        <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Password" name="passwordInput" [(ngModel)]="sPassword" #passwordInput="ngModel" required minlength="3" >
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <div class="form-group has-feedback" style="margin: 0px !important;" >
+            <div class="input-group" style="margin-bottom: 15px">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input type="password" class="form-control" placeholder="Password" name="passwordInput" [(ngModel)]="sPassword" #passwordInput="ngModel" required minlength="3" >
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
         </div>
 
         <div *ngIf="sErrorMessage" class="alert alert-danger">
@@ -53,6 +59,17 @@
     </div>
 
     <a href="#">I forgot my password</a> <br/> <br/>
-    <a routerLink="/register" class="text-center"> <b>Register</b> a new membership</a>
+
+
+    <div class="form-group" style="margin-bottom: 0;">
+        <div class="col-md-12 control" style="padding: 0">
+            Don't have an account? <br/>
+            <div style="border-top: 1px solid#888; padding-top:10px; font-size:85%">
+                <a routerLink="/register" onclick="$('#loginbox').hide(); $('#signupbox').show()" >
+                    <strong>Register</strong> a new membership
+                </a>
+            </div>
+        </div>
+    </div>
 
 </div>
