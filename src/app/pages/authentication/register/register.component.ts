@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,  ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentFactory } from '@angular/core';
+import { Component, OnInit, OnDestroy,  AfterViewInit, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentFactory } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RegisterFormComponent } from './registration-form/register-form.component';
@@ -8,7 +8,7 @@ import { RegisterFormComponent } from './registration-form/register-form.compone
   templateUrl: './register.component.html',
   entryComponents: [ RegisterFormComponent ]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements AfterViewInit, OnInit {
 
 
   @ViewChild('RegisterFormComponentView', {read: ViewContainerRef}) RegisterFormComponentView: ViewContainerRef;
@@ -29,11 +29,15 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  public ngAfterViewInit(){
+    this.initializeRegisterTemplate();
+  }
+
 
   public ngOnInit() {
     window.dispatchEvent( new Event( 'resize' ) );
 
-    this.initializeRegisterTemplate();
+
   }
 
 

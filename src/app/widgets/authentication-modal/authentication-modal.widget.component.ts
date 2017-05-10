@@ -4,7 +4,7 @@
  */
 
 
-import {Component, OnInit, OnDestroy, ViewContainerRef, } from '@angular/core';
+import {Component, OnInit, AfterViewInit, OnDestroy, ViewContainerRef, } from '@angular/core';
 import { Overlay, overlayConfigFactory } from 'angular2-modal';
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 
@@ -29,7 +29,7 @@ import {  AuthenticationModelWindowContext, AuthenticationModelWindow } from './
 
 })
 
-export class AuthenticationModalWidgetComponent implements OnInit
+export class AuthenticationModalWidgetComponent implements AfterViewInit, OnInit
 {
     constructor(
 
@@ -40,13 +40,14 @@ export class AuthenticationModalWidgetComponent implements OnInit
         this.modal.overlay.defaultViewContainer = this.vcRef;
     }
 
+    public ngAfterViewInit(){
 
+        this.showModal(false, true);
+    }
 
     public ngOnInit() {
         window.dispatchEvent( new Event( 'resize' ) );
 
-
-        this.showModal(false, true);
     }
 
     public showModal(bShowLogin, bShowRegistration) {

@@ -4,15 +4,18 @@ import { UserService } from '../user.service';
 
 @Injectable()
 export class CanActivateAuthGuard implements CanActivate {
-  private connected: boolean = false;
+
+  private bLoggedIn: boolean = false;
 
   constructor(
     private router: Router,
-    private user: UserService
+    private userService: UserService
   ) {
-    this.user.currentUser.subscribe((user) => {
-      this.connected = user.connected;
+
+    this.userService.currentUser.subscribe((user) => {
+      this.bLoggedIn = this.userService.bLoggedIn;
     });
+
   }
 
   public canActivate() {

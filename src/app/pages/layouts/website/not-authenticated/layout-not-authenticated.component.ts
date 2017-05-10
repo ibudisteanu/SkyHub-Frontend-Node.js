@@ -13,7 +13,9 @@ import { AdminLTETranslateService } from '../../../../services/translate.service
 export class LayoutNotAuthenticatedComponent implements OnInit {
     private toastrConfig: ToasterConfig;
     private logger: LoggerService;
-    private mylinks: Array<any> = [];
+
+    public menuSidebarItems: Array<any> = [];
+    public menuHeaderItems : Array<any> = [];
 
     constructor(
         private userServ: UserService,
@@ -28,65 +30,47 @@ export class LayoutNotAuthenticatedComponent implements OnInit {
         });
         // this.translate = translate.getTranslate();
         // this.logger = new LoggerService( this.translate );
+
+
+        this.initializeLayout();
+
+    }
+
+    protected initializeLayout(){
+        // define here your own links menu structure
+        this.menuSidebarItems = [ ];
+
+        this.menuHeaderItems = [
+            {
+                "title" : "Login",
+                "link" : {
+                    "external" : false,
+                    "link":"login",
+                }
+            },
+            {
+                "title" : "Register",
+                "link" : {
+                    "external" : false,
+                    "link":"register",
+                }
+            },
+            {
+                "title" : "Forums",
+                "link" : {
+                    "external" : false,
+                    "link" : "forums"
+                }
+            }
+        ];
+
+
     }
 
     public ngOnInit() {
 
 
-        // define here your own links menu structure
-        this.mylinks = [
-            {
-                'title': 'Home',
-                'icon': 'dashboard',
-                'link': ['/']
-            },
-            {
-                'title': 'Client',
-                'icon': 'usd',
-                'link': ['/client']
-            },
-            {
-                'title': 'Sub menu',
-                'icon': 'link',
-                'sublinks': [
-                    {
-                        'title': 'Page 2',
-                        'link': ['/page/2'],
-                    },
-                    {
-                        'title': 'Page 3',
-                        'link': ['/page/3'],
-                    }
-                ]
-            },
-            {
-                'title': 'External Link',
-                'icon': 'google',
-                'link': ['http://google.com'],
-                'external': true,
-                'target': '_blank'
-            },
-            {
-                'title': 'External Links',
-                'icon': 'link',
-                'sublinks': [
-                    {
-                        'title': 'Github',
-                        'link': ['http://github.com'],
-                        'icon': 'github',
-                        'external': true,
-                        'target': '_blank'
-                    },
-                    {
-                        'title': 'Yahoo',
-                        'link': ['http://yahoo.com'],
-                        'icon': 'yahoo',
-                        'external': true,
-                        'target': '_blank'
-                    }
-                ]
-            }
-        ];
+
 
     }
 

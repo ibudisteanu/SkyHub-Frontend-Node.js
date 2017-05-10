@@ -46,8 +46,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         lastName: 'Antoine'
     });
 
-
   }
+
 
   public ngOnDestroy() {
     // removing the header

@@ -8,6 +8,8 @@ import { TranslateService } from 'ng2-translate';
 })
 export class AppHeaderComponent {
 
+    @Input() private menuHeaderItems : Array<any> = [];
+
   constructor(
   ) {
     // TODO

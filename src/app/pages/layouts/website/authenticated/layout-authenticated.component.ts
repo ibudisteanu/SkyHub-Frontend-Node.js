@@ -13,7 +13,9 @@ import { AdminLTETranslateService } from '../../../../services/translate.service
 export class LayoutAuthenticatedComponent implements OnInit {
     private toastrConfig: ToasterConfig;
     private logger: LoggerService;
-    private mylinks: Array<any> = [];
+
+    public menuSidebarItems: Array<any> = [];
+    public menuHeaderItems : Array<any> = [];
 
     constructor(
         private userServ: UserService,
@@ -28,12 +30,15 @@ export class LayoutAuthenticatedComponent implements OnInit {
         });
         // this.translate = translate.getTranslate();
         // this.logger = new LoggerService( this.translate );
+
+
+        this.initializeLayout();
+
     }
 
-    public ngOnInit() {
-
+    protected initializeLayout(){
         // define here your own links menu structure
-        this.mylinks = [
+        this.menuSidebarItems = [
             {
                 'title': 'Home',
                 'icon': 'dashboard',
@@ -86,6 +91,58 @@ export class LayoutAuthenticatedComponent implements OnInit {
                 ]
             }
         ];
+
+        this.menuHeaderItems = [
+            {
+                "include" : "<!-- Messages: style can be found in dropdown.less-->",
+                "class": "dropdown messages-menu messagesBox",
+
+                "link" : {
+                    "external": false,
+                }
+            },
+            {
+                "include" : "<!-- Notifications Menu -->",
+                "class" : "dropdown notifications-menu notificationsBox",
+
+                "link" : {
+                    "external": false,
+                }
+            },
+            {
+                "include" : "<!-- Tasks Menu -->",
+                "class" : "dropdown tasks-menu tasksBox",
+
+                "link" : {
+                    "external": false,
+                }
+            },
+            {
+                "include" : "<!-- User Account Menu -->",
+                "class" : "dropdown user user-menu userBox",
+
+                "link" : {
+                    "external": false,
+                }
+            },
+            {
+                "include" : "<!-- Control Sidebar Toggle Button -->",
+
+                "link" : {
+                    "external" : false,
+                    "link":"#",
+                    "data-toggle" : "control-sidebar",
+                    "class" : "toggle-sidebar-right",
+                    "icon": "fa fa-gears",
+                }
+            }
+
+        ]
+    }
+
+    public ngOnInit() {
+
+
 
     }
 

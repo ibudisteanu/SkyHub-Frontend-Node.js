@@ -115,9 +115,10 @@ let pages = [
     PageNumComponent,
     ClientComponent,
 
-    LayoutWebsiteComponent,
+
     LayoutAuthenticatedComponent,
     LayoutNotAuthenticatedComponent,
+    LayoutWebsiteComponent,
 
     LoginFormComponent,
     LoginComponent,
@@ -135,7 +136,7 @@ import { routing } from './app.routes';
 // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
 // we must tell angular about it.
 let entryComp = [
-    AuthenticationModelWindow, RegisterFormComponent,
+    AuthenticationModalWidgetComponent, AuthenticationModelWindow, RegisterFormComponent, LoginFormComponent,    LayoutAuthenticatedComponent, LayoutNotAuthenticatedComponent,
 ];
 
 

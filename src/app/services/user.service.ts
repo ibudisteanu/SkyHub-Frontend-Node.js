@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class UserService {
+
+    public bLoggedIn : boolean = false;
     public currentUser: ReplaySubject<User> = new ReplaySubject<User>( 1 );
 
     constructor(
@@ -14,14 +16,20 @@ export class UserService {
 
     }
 
+    public setAuthenticatedUser ( user : User){
 
-    public setCurrentUser( user: User ) {
+        this.bLoggedIn = true;
+        this.setCurrentUser(user);
+    }
+
+    protected setCurrentUser( user: User ) {
       this.currentUser.next( user );
     }
 
     public logout() {
       let user = new User();
-      user.connected = false;
+      user.bLoggedIn = false;
+
       this.setCurrentUser( user );
       this.router.navigate(['login']);
     }

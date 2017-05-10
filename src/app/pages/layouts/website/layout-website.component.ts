@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver,  AfterViewInit, ViewChild,  ViewContainerRef, ComponentFactory  } from '@angular/core';
 import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
 import { LoggerService } from '../../../services/logger.service';
@@ -9,14 +9,22 @@ import { AdminLTETranslateService } from '../../../services/translate.service';
 import { LayoutAuthenticatedComponent } from './authenticated/layout-authenticated.component';
 import { LayoutNotAuthenticatedComponent } from './not-authenticated/layout-not-authenticated.component';
 
+import { LayoutWebsiteDirective} from './directive/layout-website.directive';
+
 @Component( {
     selector: 'app-layouts-auth',
-    templateUrl: './layout-website.component.html'
+    entryComponents: [ LayoutAuthenticatedComponent, LayoutNotAuthenticatedComponent  ],
+    templateUrl: './layout-website.component.html',
+
 })
-export class LayoutWebsiteComponent implements OnInit {
+export class LayoutWebsiteComponent implements AfterViewInit, OnInit {
     private toastrConfig: ToasterConfig;
     private logger: LoggerService;
-    private mylinks: Array<any> = [];
+
+    private menuSidebarItems: Array<any> = [];
+    private menuHeaderItems : Array<any> = [];
+
+    protected bLoggedIn = false;
 
     constructor(
       private userServ: UserService,
@@ -24,14 +32,68 @@ export class LayoutWebsiteComponent implements OnInit {
       private translate: AdminLTETranslateService,
       private authService: AuthService,
 
+      private compFactoryResolver: ComponentFactoryResolver,
+      public viewContainerRef: ViewContainerRef
+
     ) {
         this.toastrConfig = new ToasterConfig( {
             newestOnTop: true,
             showCloseButton: true,
             tapToDismiss: false
         });
-        // this.translate = translate.getTranslate();
-        // this.logger = new LoggerService( this.translate );
+
+        this.userServ.currentUser.subscribe((user) => {
+
+            if (this.bLoggedIn != this.userServ.bLoggedIn){
+                this.bLoggedIn = this.userServ.bLoggedIn;
+                this.changeLayout();
+            }
+        });
+
+    }
+
+    @ViewChild('LayoutAuthenticatedComponentViewChild') LayoutAuthenticatedComponentViewChild: 'LayoutAuthenticatedComponentViewViewChild';
+    @ViewChild('LayoutNotAuthenticatedComponentViewChild') LayoutNotAuthenticatedComponentViewChild: 'LayoutNotAuthenticatedComponentViewChild';
+
+    protected  layoutAuthenticatedComponent;
+    protected  layoutNotAuthenticatedComponent;
+
+    public changeLayout(){
+
+        console.log('Change Layout to : '+this.bLoggedIn);
+        var selectedLayout = null;
+
+        if (this.bLoggedIn){
+
+            let componentFactory = this.compFactoryResolver.resolveComponentFactory(LayoutAuthenticatedComponent);
+
+            this.viewContainerRef.clear();
+
+            let componentRef = this.viewContainerRef.createComponent(componentFactory);
+
+            this.layoutAuthenticatedComponent = (<LayoutAuthenticatedComponent>componentRef.instance);
+            selectedLayout = this.layoutAuthenticatedComponent;
+
+        } else {
+            let componentFactory = this.compFactoryResolver.resolveComponentFactory(LayoutNotAuthenticatedComponent);
+
+            this.viewContainerRef.clear();
+
+            let componentRef = this.viewContainerRef.createComponent(componentFactory);
+
+            this.layoutNotAuthenticatedComponent = (<LayoutNotAuthenticatedComponent>componentRef.instance);
+            selectedLayout = this.layoutNotAuthenticatedComponent;
+        }
+
+        this.menuSidebarItems = selectedLayout.menuSidebarItems;
+        this.menuHeaderItems = [];//selectedLayout.menuHeaderItems;
+
+        console.log('aaa meers', selectedLayout);
+
+    }
+
+    public ngAfterViewInit(){
+        this.changeLayout();
     }
 
     public ngOnInit() {
@@ -47,59 +109,8 @@ export class LayoutWebsiteComponent implements OnInit {
         }
 
         // define here your own links menu structure
-        this.mylinks = [
-          {
-            'title': 'Home',
-            'icon': 'dashboard',
-            'link': ['/']
-          },
-          {
-            'title': 'Client',
-            'icon': 'usd',
-            'link': ['/client']
-          },
-          {
-            'title': 'Sub menu',
-            'icon': 'link',
-            'sublinks': [
-              {
-                'title': 'Page 2',
-                'link': ['/page/2'],
-              },
-              {
-                'title': 'Page 3',
-                'link': ['/page/3'],
-              }
-            ]
-          },
-          {
-            'title': 'External Link',
-            'icon': 'google',
-            'link': ['http://google.com'],
-            'external': true,
-            'target': '_blank'
-          },
-          {
-            'title': 'External Links',
-            'icon': 'link',
-            'sublinks': [
-              {
-                'title': 'Github',
-                'link': ['http://github.com'],
-                'icon': 'github',
-                'external': true,
-                'target': '_blank'
-              },
-              {
-                'title': 'Yahoo',
-                'link': ['http://yahoo.com'],
-                'icon': 'yahoo',
-                'external': true,
-                'target': '_blank'
-              }
-            ]
-          }
-        ];
+        this.menuHeaderItems = [];
+        this.menuSidebarItems = [];
 
     }
 
@@ -138,6 +149,11 @@ export class LayoutWebsiteComponent implements OnInit {
 
         // other browser
         return false;
+    }
+
+    protected getContentWrapperStyle(){
+        if (this.bLoggedIn) return ''; //no menu
+        else return '0';
     }
 
 }

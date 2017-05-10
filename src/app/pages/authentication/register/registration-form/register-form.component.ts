@@ -25,6 +25,9 @@ export class RegisterFormComponent implements OnInit {
     private errorFirstNameMessage : string;
     private errorLastNameMessage : string;
 
+    public OnRegisterSuccessfully = null;
+    public OnRegisterUnsuccessfully = null;
+
     constructor(
         private userServ: UserService,
         //private restServ: RestService,
@@ -58,18 +61,15 @@ export class RegisterFormComponent implements OnInit {
     }
 
     protected registrationSuccessfully(res){
-        let user1 = new User( {
-            profilePic: 'public/assets/img/user2-160x160.jpg',
-            email: 'weber.antoine.pro@gmail.com',
-            firstName: 'WEBER',
-            lastName: 'Antoine'
-        } );
 
-        user1.connected = true;
+        let userRegistered = new User( res.user );
+        this.userServ.setAuthenticatedUser( userRegistered );
 
-        this.userServ.setCurrentUser( user1 );
+        if (this.OnRegisterUnsuccessfully != null)
+            this.OnRegisterUnsuccessfully(res);
+        else
+            this.router.navigate( ['/home'] );
 
-        this.router.navigate( ['home'] );
     }
 
     protected registrationUnsuccessfully(res){
@@ -77,6 +77,9 @@ export class RegisterFormComponent implements OnInit {
         this.errorFirstNameMessage = res.errors.firstName;
         this.errorLastNameMessage = res.errors.lastName;
         this.errorLastNameMessage = res.errors.lastName;
+
+        if (this.OnRegisterUnsuccessfully != null)
+            this.OnRegisterUnsuccessfully(res);
 
     }
 

@@ -11,7 +11,7 @@ import { User } from './../../models/user';
 
 @Injectable()
 export class AuthService {
-    isLoggedin: boolean;
+
 
     constructor(
         private restService : RestService,
@@ -20,6 +20,7 @@ export class AuthService {
         private cookiesService : CookiesService
     ) {
         this.loadCookieUser();
+
     }
 
     public loadCookieUser ( ){
@@ -44,12 +45,10 @@ export class AuthService {
                 if(resData.result == "true") {
 
                     let userLogged = new User( resData.user);
-                    this.userService.setCurrentUser( userLogged );
+                    this.userService.setAuthenticatedUser( userLogged );
 
                     this.cookiesService.setCookie('token', resData.token, 365*5, '/');
                     console.log('setting cookie'+resData.token);
-
-                    this.isLoggedin = true;
                 }
 
                 resolve(resData);
@@ -58,22 +57,6 @@ export class AuthService {
 
         });
 
-        /*
-         //Sending with Observable
-         this.socketService.sendRequestObservable("auth/login",{emailUserName:sEmailUserName,userPassword:sUserPassword}).subscribe( resData =>{
-
-         console.log('Answer from Server Auth Login');
-         console.log(resData);
-         console.log(this);
-
-         if(resData.success) {
-         window.localStorage.setItem('auth_key', resData.token);
-         this.isLoggedin = true;
-         }
-
-         resolve(resData);
-         });
-        */
     }
 
     public loginTokenAsync(token){
@@ -87,9 +70,7 @@ export class AuthService {
                 if(resData.result == "true") {
 
                     let userLogged = new User( resData.user);
-                    this.userService.setCurrentUser( userLogged );
-
-                    this.isLoggedin = true;
+                    this.userService.setAuthenticatedUser( userLogged );
                 }
 
                 resolve(resData);
@@ -129,11 +110,15 @@ export class AuthService {
             this.restService.postAsync("auth/login", {emailUsername:sEmailUserName,password:sUserPassword} ).then((resData : any) =>{
 
                 if(resData.success) {
-                    window.localStorage.setItem('auth_key', resData.token);
-                    this.isLoggedin = true;
+
+                    let userLogged = new User( resData.user);
+                    this.userService.setAuthenticatedUser( userLogged );
+
+                    this.cookiesService.setCookie('token', resData.token, 365*5, '/');
+                    console.log('setting cookie'+resData.token);
                 }
 
-                resolve(this.isLoggedin);
+                resolve(resData);
             }).catch (function (e)
             {
                 console.log("Error loggin in");
@@ -146,7 +131,10 @@ export class AuthService {
     }
 
     public logout(){
-        this.isLoggedin = false;
-        window.localStorage.removeItem('auth_key');
+        this.userService.logout();
+    }
+
+    public getLoggedInStatus(){
+        return this.userService.bLoggedIn;
     }
 }

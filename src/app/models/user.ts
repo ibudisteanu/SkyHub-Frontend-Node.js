@@ -1,4 +1,7 @@
 export class User {
+
+    public bLoggedIn : boolean;
+
     public firstName: string;
     public lastName: string;
     public email: string;

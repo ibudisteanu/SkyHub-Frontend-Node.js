@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy , ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentFactory } from '@angular/core';
+import { Component, OnInit, OnDestroy , AfterViewInit, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentFactory } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LoginFormComponent } from './login-form/login-form.component';
@@ -9,7 +9,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
   templateUrl: './login.component.html',
   entryComponents: [ LoginFormComponent ]
 })
-export class LoginComponent implements OnInit
+export class LoginComponent implements AfterViewInit, OnInit
 {
 
   @ViewChild('LoginFormComponentView', {read: ViewContainerRef}) LoginFormComponentView: ViewContainerRef;
@@ -31,11 +31,14 @@ export class LoginComponent implements OnInit
 
   }
 
+  public ngAfterViewInit(){
+    this.initializeLoginTemplate();
+  }
 
   public ngOnInit() {
     window.dispatchEvent( new Event( 'resize' ) );
 
-    this.initializeLoginTemplate();
+
   }
 
 
